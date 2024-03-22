@@ -52,7 +52,7 @@ module.exports = async (client) => {
       "Bot User:": `${client.user.tag}`,
       "Guild(s):": `${client.guilds.cache.size} Servers`,
       "Watching:": `${client.guilds.cache.reduce((a, b) => a + b?.memberCount, 0)} Members`,
-      "Prefix:": `${config.prefix}`,
+      "Prefix:": `!`,
       "Commands:": `${client.commands.size}`,
       "Discord.js:": `v${Discord.version}`,
       "Node.js:": `${process.version}`,
