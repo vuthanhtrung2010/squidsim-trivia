@@ -1,4 +1,3 @@
-const config = require(`${process.cwd()}/botconfig/config.json`);
 const Discord = require("discord.js");
 const { MessageEmbed } = require("discord.js");
 
