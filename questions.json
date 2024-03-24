@@ -1,62 +1,50 @@
-[
-    {
-        "question1": {
-            "ans1": "Honeycomb Challenge",
-            "ans2": "Tug of War",
-            "ans3": "Glass Stepping Stones",
-            "ans4": "Marbles",
-            "question": "Which game involves players cutting shapes out of honeycomb without breaking them?",
-            "answer": 1
-        }
+{
+    "question1": {
+        "ans1": "Honeycomb Challenge",
+        "ans2": "Tug of War",
+        "ans3": "Glass Stepping Stones",
+        "ans4": "Marbles",
+        "question": "Which game involves players cutting shapes out of honeycomb without breaking them?",
+        "answer": 1
     },
-    {
-        "question2": {
-            "ans1": "test",
-            "ans2": "!start",
-            "ans3": "idk",
-            "ans4": "amogus",
-            "question": "What was the first message ever inside Gamehall?",
-            "answer": 1
-        }
+    "question2": {
+        "ans1": "test",
+        "ans2": "!start",
+        "ans3": "idk",
+        "ans4": "amogus",
+        "question": "What was the first message ever inside Gamehall?",
+        "answer": 1
     },
-    {
-        "question3": {
-            "ans1": "Mr.Oh",
-            "ans2": "Mr.Kang",
-            "ans3": "Mr.Lee",
-            "ans4": "Mr.Cho",
-            "question": "What is the name of the frontman in charge of the Squid Game?"
-        }
+    "question3": {
+        "ans1": "Mr.Oh",
+        "ans2": "Mr.Kang",
+        "ans3": "Mr.Lee",
+        "ans4": "Mr.Cho",
+        "question": "What is the name of the frontman in charge of the Squid Game?"
     },
-    {
-        "question4": {
-            "ans1": "test",
-            "ans2": "!start",
-            "ans3": "idk",
-            "ans4": "amogus",
-            "question": "What was the first message ever inside Gamehall?",
-            "answer": 1
-        }
+    "question4": {
+        "ans1": "test",
+        "ans2": "!start",
+        "ans3": "idk",
+        "ans4": "amogus",
+        "question": "What was the first message ever inside Gamehall?",
+        "answer": 1
     },
-    {
-        "question5": {
-            "ans1": "<@841781116758261810>",
-            "ans2": "<@1139406664584409159>",
-            "ans3": "Immortal",
-            "ans4": "<@493177799499055115>",
-            "question": "Who is the owner of Squidsim?",
-            "answer": 4,
-            "comment": "4 == ZMN"
-        }
+    "question5": {
+        "ans1": "<@841781116758261810>",
+        "ans2": "<@1139406664584409159>",
+        "ans3": "Immortal",
+        "ans4": "<@493177799499055115>",
+        "question": "Who is the owner of Squidsim?",
+        "answer": 4,
+        "comment": "4 == ZMN"
     },
-    {
-        "question6": {
-            "ans1": "Square",
-            "ans2": "Triangle",
-            "ans3": "Circle",
-            "ans4": "Diamond",
-            "question": "What is the iconic shape of the VIP's masks in Squid Game?",
-            "answer": 2
-        }
+    "question6": {
+        "ans1": "Square",
+        "ans2": "Triangle",
+        "ans3": "Circle",
+        "ans4": "Diamond",
+        "question": "What is the iconic shape of the VIP's masks in Squid Game?",
+        "answer": 2
     }
-]
+}

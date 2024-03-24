@@ -26,7 +26,7 @@ module.exports = {
       const q = question[random_q]
 
       await client.game.set("interaction.interacted", [])
-      let q_data = question.question;
+      let q_data = q.question;
       let q_1 = q.ans1;
       let q_2 = q.ans2;
       let q_3 = q.ans3;
