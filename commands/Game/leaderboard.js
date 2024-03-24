@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
   name: 'leaderboard',
   category: 'Game',
-  aliases: ['lb'],
+  aliases: ['topw', 'wlb'],
   description: 'Displays the leaderboard of users with the most wins.',
   cooldown: 10,
   usage: '.leaderboard',
