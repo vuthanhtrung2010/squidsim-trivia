@@ -1,6 +1,5 @@
 const { readdirSync } = require("fs");
 const { MessageEmbed } = require("discord.js");
-const ee = require(`${process.cwd()}/botconfig/embed.json`);
 console.log(
   "Welcome to SERVICE HANDLER /--/ By https://trung.is-a.dev /--/ Discord: trungisreal",
 );
