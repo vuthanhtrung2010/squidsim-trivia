@@ -39,7 +39,6 @@ module.exports = async (client) => {
 
       client.ownersettingsdb = new client.database.table("ownersettings");
       client.game = new client.database.table("game");
-      client.questionDB = new client.database.table("questions");
       client.user_data = new client.database.table("userdatadb");
 
       client.game.set(`game.game`, false)
