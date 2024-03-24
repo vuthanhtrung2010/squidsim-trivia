@@ -2,9 +2,6 @@ const {
   MessageEmbed,
   Util: { splitMessage },
 } = require(`discord.js`);
-var config = require(`../../botconfig/config.json`);
-var ee = require(`../../botconfig/embed.json`);
-var emoji = require(`../../botconfig/emojis.json`);
 const fs = require("fs");
 const { inspect } = require(`util`);
 module.exports = {
