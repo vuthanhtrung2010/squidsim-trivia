@@ -1,5 +1,6 @@
 const { MessageEmbed, MessageButton, MessageActionRow } = require(`discord.js`);
 const { ensure_datas } = require(`../../handlers/functions.js`);
+const question = require(`../../questions.json`)
 
 module.exports = {
   name: `superspeedtrivia`,
@@ -20,15 +21,18 @@ module.exports = {
       let minq = 1;
       let maxq = 1;
 
-      const question = await client.questionDB.get(`question${Math.floor(Math.random() * (maxq - minq + 1)) + minq}`);
+      let random_q = `question${Math.floor(Math.random() * (maxq - minq + 1)) + minq}`
+    
+      const q = question[random_q]
+
       await client.game.set("interaction.interacted", [])
       let q_data = question.question;
-      let q_1 = question.ans1;
-      let q_2 = question.ans2;
-      let q_3 = question.ans3;
-      let q_4 = question.ans4;
+      let q_1 = q.ans1;
+      let q_2 = q.ans2;
+      let q_3 = q.ans3;
+      let q_4 = q.ans4;
 
-      let q_ans = question.answer;
+      let q_ans = q.answer;
 
       let button1 = new MessageButton()
         .setStyle("PRIMARY")
@@ -52,16 +56,16 @@ module.exports = {
 
       let correct_user = [];
     let interacted = []
-      const q_embed = new MessageEmbed()
-        .setTitle("Super Speed Trivia Question")
-        .setDescription(`
-        ${q_data}
-        **1.** ${q_1}.
-        **2.** ${q_2}.
-        **3.** ${q_3}.
-        **4.** ${q_4}.
-        `)
-        .setFooter("Choose wisely! - Made by trungisreal");
+    const q_embed = new MessageEmbed()
+      .setTitle("Super Speed Trivia Question")
+      .setDescription(`
+      ${q_data}
+      **1.** ${q_1}.
+      **2.** ${q_2}.
+      **3.** ${q_3}.
+      **4.** ${q_4}.
+      `)
+      .setFooter("Choose wisely! - Made by trungisreal");
 
       const row = new MessageActionRow()
         .addComponents(button1, button2, button3, button4);
