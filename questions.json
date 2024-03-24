@@ -46,5 +46,29 @@
         "ans4": "Diamond",
         "question": "What is the iconic shape of the VIP's masks in Squid Game?",
         "answer": 2
+    },
+    "question7": {
+        "ans1": "699",
+        "ans2": "456",
+        "ans3": "001",
+        "ans4": "240",
+        "question": "What is Gi-hun's number?",
+        "answer": 2
+    },
+    "question8": {
+        "ans1": "Lenny",
+        "ans2": "Niko",
+        "ans3": "ZMN",
+        "ans4": "Cats",
+        "question": "Who is the first top player?",
+        "answer": 2
+    },
+    "question9": {
+        "ans1": "Hae-soo",
+        "ans2": "Seong-gi",
+        "ans3": "Sang-woo",
+        "ans4": "Gi-hun",
+        "question": "Who is the main protagonist of Squid Game?",
+        "answer": 4
     }
 }

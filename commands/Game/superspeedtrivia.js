@@ -19,7 +19,7 @@ module.exports = {
       if (await client.game.get(`game.game`)) return message.channel.send("A game is already started!");
       await client.game.set("game.game", true);
       let minq = 1;
-      let maxq = 1;
+      let maxq = 9;
 
       let random_q = `question${Math.floor(Math.random() * (maxq - minq + 1)) + minq}`
     
