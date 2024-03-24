@@ -70,5 +70,13 @@
         "ans4": "Gi-hun",
         "question": "Who is the main protagonist of Squid Game?",
         "answer": 4
+    },
+    "question10": {
+        "ans1": "ZMN",
+        "ans2": "Lenny",
+        "ans3": "Conquestor",
+        "ans4": "Immortal",
+        "question": "Who is squidsims current top player?",
+        "answer": 3
     }
 }
