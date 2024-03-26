@@ -1,7 +1,7 @@
 const { Database } = require("quickmongo");
 const { delay } = require("./functions");
 const OS = require("os");
-require('dotenv').config()
+require("dotenv").config();
 
 module.exports = async (client) => {
   return new Promise(async (res) => {
@@ -11,7 +11,7 @@ module.exports = async (client) => {
       minPoolSize: 50,
       writeConcern: "majority",
     };
-    let mongoUri = process.env.mongoUri
+    let mongoUri = process.env.mongoUri;
     // CACHE DURATION OPTIONS
     process.env.DB_cache_ping = 10_000; // Delete the cache after X ms | < 0 === never delete [DEFAULT: 60_000]
     process.env.DB_cache_get = 0; // Delete the cache after X ms | < 0 === never delete [DEFAULT: 300_000]
@@ -23,9 +23,7 @@ module.exports = async (client) => {
             Aka it will be faster, but needs more ram...
         */
     let dateNow = Date.now();
-    console.log(
-      `${String("[x] :: ")}Now loading the Database ...`,
-    );
+    console.log(`${String("[x] :: ")}Now loading the Database ...`);
     client.database = new Database(mongoUri, connectionOptions);
     // when the db is ready
     client.database.on("ready", async () => {
@@ -33,15 +31,14 @@ module.exports = async (client) => {
       console.log(
         `[x] :: ` +
           `LOADED THE DATABASE after: ` +
-          `${Date.now() - dateNow}ms\n       Database got a ${DbPing}ms ping`
-            ,
+          `${Date.now() - dateNow}ms\n       Database got a ${DbPing}ms ping`,
       );
 
       client.ownersettingsdb = new client.database.table("ownersettings");
       client.game = new client.database.table("game");
       client.user_data = new client.database.table("userdatadb");
 
-      client.game.set(`game.game`, false)
+      client.game.set(`game.game`, false);
     });
 
     var errortrys = 0;

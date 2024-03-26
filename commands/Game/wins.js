@@ -1,20 +1,20 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-  name: 'wins',
-  category: 'Game',
-  description: 'Displays your number of wins.',
+  name: "wins",
+  category: "Game",
+  description: "Displays your number of wins.",
   cooldown: 1,
-  usage: '.wins',
+  usage: ".wins",
   run: async (client, message, args, prefix) => {
     try {
       let userId = args[0];
 
       if (!userId) {
         userId = message.author.id;
-      } else if (userId.startsWith('<@') && userId.endsWith('>')) {
+      } else if (userId.startsWith("<@") && userId.endsWith(">")) {
         userId = userId.slice(2, -1);
-        if (userId.startsWith('!')) {
+        if (userId.startsWith("!")) {
           userId = userId.slice(1);
         }
       }
@@ -29,17 +29,17 @@ module.exports = {
       const user = await client.users.fetch(userId);
 
       const embed = new MessageEmbed()
-        .setTitle('Wins Count')
+        .setTitle("Wins Count")
         .setDescription(`<@${userId}> have ${wins} wins.`)
         .setAuthor({
           name: user.tag,
-          iconURL: user.displayAvatarURL({ dynamic: true, size: 64 })
+          iconURL: user.displayAvatarURL({ dynamic: true, size: 64 }),
         })
-        .setColor('#ff0000');
+        .setColor("#ff0000");
 
       message.reply({ embeds: [embed] });
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.error("An error occurred:", error);
     }
   },
 };

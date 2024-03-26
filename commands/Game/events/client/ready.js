@@ -11,13 +11,10 @@ module.exports = async (client) => {
       const stringlength = 69;
       console.log("\n");
       console.log(
-        `     ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓`
-          ,
+        `     ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓`,
       );
       console.log(
-        `     ┃ ` +
-          " ".repeat(-1 + stringlength - ` ┃ `.length) +
-          "┃",
+        `     ┃ ` + " ".repeat(-1 + stringlength - ` ┃ `.length) + "┃",
       );
       console.log(
         `     ┃ ` +
@@ -39,13 +36,10 @@ module.exports = async (client) => {
           "┃",
       );
       console.log(
-        `     ┃ ` +
-          " ".repeat(-1 + stringlength - ` ┃ `.length) +
-          "┃",
+        `     ┃ ` + " ".repeat(-1 + stringlength - ` ┃ `.length) + "┃",
       );
       console.log(
-        `     ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛`
-          ,
+        `     ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛`,
       );
     } catch {
       /* */

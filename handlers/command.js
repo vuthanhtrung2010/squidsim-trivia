@@ -5,9 +5,7 @@ console.log(
 );
 module.exports = (client) => {
   let dateNow = Date.now();
-  console.log(
-    `${String("[x] :: ")}Now loading the Commands ...`,
-  );
+  console.log(`${String("[x] :: ")}Now loading the Commands ...`);
   try {
     readdirSync("./commands/").forEach((dir) => {
       const commands = readdirSync(`./commands/${dir}/`).filter((file) =>

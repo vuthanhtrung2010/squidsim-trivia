@@ -1,6 +1,4 @@
-const {
-  MessageEmbed,
-} = require(`discord.js`);
+const { MessageEmbed } = require(`discord.js`);
 
 module.exports = {
   name: `ensureall`,
@@ -39,17 +37,21 @@ module.exports = {
           new MessageEmbed()
             .setColor("GREEN")
             .setTitle("Database Ensure Complete")
-            .setDescription("All non-bot server members have been ensured in the database."),
+            .setDescription(
+              "All non-bot server members have been ensured in the database.",
+            ),
         ],
       });
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.error("An error occurred:", error);
       message.channel.send({
         embeds: [
           new MessageEmbed()
             .setColor("RED")
             .setTitle("Error")
-            .setDescription("An error occurred while ensuring members in the database."),
+            .setDescription(
+              "An error occurred while ensuring members in the database.",
+            ),
         ],
       });
     }

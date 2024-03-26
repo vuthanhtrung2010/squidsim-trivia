@@ -1,10 +1,10 @@
-const _ = require('lodash');
+const _ = require("lodash");
 
 module.exports = {
   escapeRegex,
   delay,
   dbEnsure,
-  ensure_datas
+  ensure_datas,
 };
 
 async function delay(delayInms) {
@@ -160,7 +160,7 @@ async function dbEnsure(db, key, data, debug = false) {
 
 async function ensure_datas(client, userid) {
   await dbEnsure(client.user_data, `${userid}`, {
-    wins: 0
+    wins: 0,
   });
 }
 

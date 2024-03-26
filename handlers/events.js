@@ -3,9 +3,7 @@ const allevents = [];
 module.exports = (client) => {
   try {
     let dateNow = Date.now();
-    console.log(
-      `${String("[x] :: ")}Now loading the Events ...`,
-    );
+    console.log(`${String("[x] :: ")}Now loading the Events ...`);
     const load_dir = (dir) => {
       const event_files = fs
         .readdirSync(`./events/${dir}`)
@@ -33,13 +31,10 @@ module.exports = (client) => {
       const stringlength2 = 69;
       console.log("\n");
       console.log(
-        `     ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓`
-          ,
+        `     ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓`,
       );
       console.log(
-        `     ┃ ` +
-          " ".repeat(-1 + stringlength2 - ` ┃ `.length) +
-          "┃",
+        `     ┃ ` + " ".repeat(-1 + stringlength2 - ` ┃ `.length) + "┃",
       );
       console.log(
         `     ┃ ` +
@@ -53,13 +48,10 @@ module.exports = (client) => {
           "┃",
       );
       console.log(
-        `     ┃ ` +
-          " ".repeat(-1 + stringlength2 - ` ┃ `.length) +
-          "┃",
+        `     ┃ ` + " ".repeat(-1 + stringlength2 - ` ┃ `.length) + "┃",
       );
       console.log(
-        `     ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛`
-          ,
+        `     ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛`,
       );
     } catch {
       /* */

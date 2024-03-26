@@ -11,18 +11,13 @@ module.exports = {
   description: `eval Command`,
   usage: `eval <CODE>`,
   type: "bot",
-  run: async (
-    client,
-    message,
-    args,
-    prefix,
-  ) => {
+  run: async (client, message, args, prefix) => {
     if ("1139406664584409159" !== message.author?.id)
       return message.channel.send({
         embeds: [
           new MessageEmbed()
             .setColor("RED")
-            
+
             .setTitle("Missing perm"),
         ],
       });
@@ -31,10 +26,8 @@ module.exports = {
         embeds: [
           new MessageEmbed()
             .setColor("RED")
-            
-            .setTitle(
-              eval("Provide code to eval"),
-            ),
+
+            .setTitle(eval("Provide code to eval")),
         ],
       });
     let evaled;
@@ -43,14 +36,15 @@ module.exports = {
         return message.channel.send({
           embeds: [
             new MessageEmbed()
-              .setTitle(
-                eval("Trung | Evaluation"),
-              )
+              .setTitle(eval("Trung | Evaluation"))
               .setColor(es.color)
               .addFields(
-                { name: ":inbox_tray: Input", value: args.join(` `)},
-                { name: ":outbox_tray: Output", value: "```[CENSORED_BOT_TOKEN]```"}
-              )
+                { name: ":inbox_tray: Input", value: args.join(` `) },
+                {
+                  name: ":outbox_tray: Output",
+                  value: "```[CENSORED_BOT_TOKEN]```",
+                },
+              ),
           ],
         });
 
@@ -67,13 +61,13 @@ module.exports = {
         prepend: ``,
         append: ``,
       });
-      let input_msg = `\`\`\`js\n${args.join(" ")}\`\`\``
-      let output_msg = `\`\`\`${splitDescription[0]}\`\`\``
+      let input_msg = `\`\`\`js\n${args.join(" ")}\`\`\``;
+      let output_msg = `\`\`\`${splitDescription[0]}\`\`\``;
       //(over)write embed description
       evalEmbed.addFields(
-        { name: ":inbox_tray: Input", value: input_msg},
-        { name: ":outbox_tray: Output", value: output_msg}
-      )
+        { name: ":inbox_tray: Input", value: input_msg },
+        { name: ":outbox_tray: Output", value: output_msg },
+      );
 
       message.channel.send({ embeds: [evalEmbed] });
     } catch (e) {
