@@ -16,7 +16,7 @@ module.exports = {
 
       await client.game.set("game.game", true);
       let minq = 1;
-      let maxq = 10;
+      let maxq = 14;
 
       let lastQuestion = await client.game.get("game.lastq");
       let currentQuestion;

@@ -79,5 +79,37 @@
     "ans4": "Immortal",
     "question": "Who is squidsims current top player?",
     "answer": 3
+  },
+  "question11": {
+    "ans1": "Chirpy",
+    "ans2": "Jerii",
+    "ans3": "ZMN",
+    "ans4": "Hecker",
+    "question": "Who originally made squidsim trivia?",
+    "answer": 1
+  },
+  "question12": {
+    "ans1": "2021",
+    "ans2": "2022",
+    "ans3": "2023",
+    "ans4": "2024",
+    "question": "When was squidsim made?",
+    "answer": 1
+  },
+  "question13": {
+    "ans1": "Figurehead",
+    "ans2": "VIP Leader",
+    "ans3": "Mastermind",
+    "ans4": "Front Man",
+    "question": "What is the name of the masked figure who guides the players in Squid Game?",
+    "answer": 4
+  },
+  "question14": {
+    "ans1": "Abandoned Factory",
+    "ans2": "Luxury Hotel",
+    "ans3": "Underground Bunker",
+    "ans4": "Amusement Park",
+    "question": "What is the primary location for the Squid Game competition?",
+    "answer": 1
   }
 }
