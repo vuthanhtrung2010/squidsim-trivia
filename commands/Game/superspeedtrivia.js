@@ -13,12 +13,20 @@ module.exports = {
     try {
       if (await client.game.get(`game.game`))
         return message.channel.send("A game is already started!");
+
       await client.game.set("game.game", true);
       let minq = 1;
       let maxq = 10;
 
-      let random_q = `question${Math.floor(Math.random() * (maxq - minq + 1)) + minq}`;
+      let lastQuestion = await client.game.get("game.lastq");
+      let currentQuestion;
+      
+      do {
+        currentQuestion = Math.floor(Math.random() * (maxq - minq + 1)) + minq;
+      } while (lastQuestion && currentQuestion === lastQuestion);
 
+      await client.game.set("game.lastq", currentQuestion);
+      const random_q = `question${currentQuestion}`;
       const q = question[random_q];
 
       await client.game.set("interaction.interacted", []);
