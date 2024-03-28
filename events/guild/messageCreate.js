@@ -89,6 +89,8 @@ module.exports = async (client, message) => {
     const now = Date.now(); // Get the current time
     const timestamps = client.cooldowns.get(command.name); // Get the timestamp of the last used commands
     const cooldownAmount = (command.cooldown || 1) * 1000; // Get the cooldown amount of the command
+    
+    if (!message.guild.id == "901533988382998618" || !message.guild.id == "1220234130634178591") return message.channel.send({ content: "You can only uses commands in SquidSim a.k.a (SuS Nation)[https://discord.gg/squidsim]"})
 
     if (timestamps.has(message.author?.id)) {
       // If the user is on cooldown
