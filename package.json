@@ -4,12 +4,12 @@
   "description": "A Discord Bot made by: trungisreal",
   "main": "index.js",
   "dependencies": {
+    "@dotenvx/dotenvx": "^0.32.0",
     "cpu-stat": "^2.0.1",
     "cron": "^1.8.2",
     "discord.js": "^13.17.1",
-    "dotenv": "^16.0.0",
-    "quickmongo": "github:Tomato6966/quickmongo",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "quickmongo": "github:Tomato6966/quickmongo"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
