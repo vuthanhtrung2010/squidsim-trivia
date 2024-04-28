@@ -1,7 +1,7 @@
 const { Database } = require("quickmongo");
 const { delay } = require("./functions");
 const OS = require("os");
-require("dotenv").config();
+const { PrismaClient } = require("@prisma/client");
 
 module.exports = async (client) => {
   return new Promise(async (res) => {
@@ -24,54 +24,41 @@ module.exports = async (client) => {
         */
     let dateNow = Date.now();
     console.log(`${String("[x] :: ")}Now loading the Database ...`);
+    client.prisma = new PrismaClient();
     client.database = new Database(mongoUri, connectionOptions);
     // when the db is ready
     client.database.on("ready", async () => {
-      const DbPing = await client.database.ping();
       console.log(
-        `[x] :: ` +
-          `LOADED THE DATABASE after: ` +
-          `${Date.now() - dateNow}ms\n       Database got a ${DbPing}ms ping`,
+        `[x] :: ` + `LOADED THE DATABASE after: ` + `${Date.now() - dateNow}ms`
       );
 
-      client.ownersettingsdb = new client.database.table("ownersettings");
-      client.game = new client.database.table("game");
-      client.user_data = new client.database.table("userdatadb");
+      client.game = client.prisma.GameData;
+      client.user_data = client.prisma.UserData;
 
-      client.game.set(`game.game`, false);
+      let gamedata = client.game.findUnique({
+        where: {
+          id: 1,
+        },
+      });
     });
 
-    var errortrys = 0;
-    client.database.on("error", async () => {
-      console.log("DB ERRORED");
-      errortrys++;
-      if (errortrys == 5)
-        return console.log(`Can't reconnect, it's above try limimt`);
-      await delay(2_000);
-      await client.database.connect();
-    });
-
-    var closetrys = 0;
-    client.database.on("close", async () => {
-      console.log("DB CLOSED");
-      closetrys++;
-      if (closetrys == 5)
-        return console.log(`Can't reconnect, it's above try limimt`);
-      await delay(2_000);
-      await client.database.connect();
-    });
-
-    var disconnecttrys = 0;
-    client.database.on("disconnected", async () => {
-      console.log("DB DISCONNECTED");
-      disconnecttrys++;
-      if (disconnecttrys == 5)
-        return console.log(`Can't reconnect, it's above try limimt`);
-      await delay(2_000);
-      await client.database.connect();
-    });
-
-    // top-level awaits
-    await client.database.connect();
+    if (!gamedata) {
+      client.game.create({
+        data: {
+          isPlaying: false,
+          lastQuestion: 0,
+        },
+      });
+    } else {
+      client.game.update({
+        where: {
+          id: 1,
+        },
+        data: {
+          isPlaying: false,
+          lastQuestion: 0,
+        },
+      });
+    }
   });
 };

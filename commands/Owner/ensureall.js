@@ -25,9 +25,18 @@ module.exports = {
 
       guild.members.cache.forEach(async (member) => {
         if (!member.user.bot) {
-          const exist_check = await client.user_data.get(member.id);
+          const exist_check = await client.user_data.findUnique({
+            where: {
+              userID: member.id
+            }
+          });
           if (!exist_check) {
-            await client.user_data.set(`${member.id}.wins`, 0);
+            await client.user_data.create({
+              data: {
+                userID: member.id,
+                wins: 0
+              }
+            });
           }
         }
       });

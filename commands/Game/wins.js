@@ -19,9 +19,13 @@ module.exports = {
         }
       }
 
-      const userData = await client.user_data.get(userId);
+      const userData = await client.user_data.findUnique({
+        where: {
+          userID: userId
+        }
+      });
 
-      if (!userData || !userData.wins) {
+      if (!userData && !userData.wins || userData.wins === 0) {
         return message.channel.send(`<@${userId}> haven't won any games yet!`);
       }
 

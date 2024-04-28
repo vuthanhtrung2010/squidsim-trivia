@@ -13,10 +13,10 @@ module.exports = {
       
       if (lbDatas > 25) return message.channel.send({ content: "You can't see over top 25 users!"})
 
-      const users = await client.user_data.all();
+      const users = await client.user_data.findMany();
 
-      const userData = users.reduce((acc, { ID, data }) => {
-        acc[ID] = data;
+      const userData = users.reduce((acc, { userID, data }) => {
+        acc[userID] = data;
         return acc;
       }, {});
 

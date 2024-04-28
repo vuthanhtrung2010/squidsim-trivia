@@ -1,5 +1,4 @@
 const { MessageEmbed, MessageButton, MessageActionRow } = require(`discord.js`);
-const { ensure_datas } = require(`../../handlers/functions.js`);
 const question = require(`../../questions.json`);
 
 module.exports = {
@@ -14,18 +13,38 @@ module.exports = {
       if (await client.game.get(`game.game`))
         return message.channel.send("A game is already started!");
 
-      await client.game.set("game.game", true);
+      await client.game.update({
+        where: {
+          id: 1
+        },
+        data: {
+          isPlaying: true
+        }
+      });
       let minq = 1;
       let maxq = 14;
 
-      let lastQuestion = await client.game.get("game.lastq");
+      let lastgamedata = await client.game.findUnique({
+        where: {
+          id: 1
+        }
+      });
+      
+      let lastQuestion = lastgamedata.lastQuestion
       let currentQuestion;
       
       do {
         currentQuestion = Math.floor(Math.random() * (maxq - minq + 1)) + minq;
       } while (lastQuestion && currentQuestion === lastQuestion);
 
-      await client.game.set("game.lastq", currentQuestion);
+      await client.game.update({
+        where: {
+          id: 1
+        },
+        data: {
+          lastQuestion: currentQuestion
+        }
+      });
       const random_q = `question${currentQuestion}`;
       const q = question[random_q];
 
@@ -141,10 +160,37 @@ module.exports = {
           components: [row],
         });
 
-        client.game.set("game.game", false);
+        client.game.update({
+          where: {
+            id: 1
+          },
+          data: {
+            isPlaying: false
+          }
+        });
 
         for (const userId of correct_user) {
-          client.user_data.add(`${userId}.wins`, 1);
+          let data = await client.user_data.findUnique({
+            where: {
+              userID: userId
+            }
+          });
+          if (!data) {
+            await client.user_data.create({
+              data: {
+                userID: userId,
+                wins: 1
+              }
+            })
+          }
+          else {
+            client.user_data.update({
+              where: {
+                userID: userId,
+                wins: data.wins + 1
+              }
+            })
+          }
         }
 
         if (correct_user.length > 0) {
