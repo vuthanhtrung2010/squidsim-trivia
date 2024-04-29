@@ -13,7 +13,8 @@ module.exports = {
       let check_data = await client.game.findUnique({
         where: {
           id: 1
-        }
+        },
+        cacheStrategy: { swr: 60, ttl: 60 }
       })
       
       if (check_data.isPlaying)
@@ -26,6 +27,7 @@ module.exports = {
         data: {
           isPlaying: true
         },
+        cacheStrategy: { swr: 60, ttl: 60 }
       });
       let minq = 1;
       let maxq = 14;
@@ -50,7 +52,7 @@ module.exports = {
         data: {
           lastQuestion: currentQuestion
         },
-        cacheStrategy: { swr: 3, ttl: 3 }
+        cacheStrategy: { swr: 60, ttl: 60 }
       });
       const random_q = `question${currentQuestion}`;
       const q = question[random_q];
@@ -173,7 +175,7 @@ module.exports = {
           data: {
             isPlaying: false
           },
-          cacheStrategy: { swr: 3, ttl: 3 }
+          cacheStrategy: { swr: 60, ttl: 60 }
         });
 
         for (const userId of correct_user) {
@@ -193,7 +195,7 @@ module.exports = {
             })
           }
           else {
-            client.user_data.update({
+            await client.user_data.update({
               where: {
                 userID: userId
               },
