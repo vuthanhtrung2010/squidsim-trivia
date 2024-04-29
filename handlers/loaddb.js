@@ -20,14 +20,14 @@ module.exports = async (client) => {
     });
 
     if (!gamedata) {
-      client.game.create({
+      await client.game.create({
         data: {
           isPlaying: false,
           lastQuestion: 0,
         },
       });
     } else {
-      client.game.update({
+      await client.game.update({
         where: {
           id: 1,
         },

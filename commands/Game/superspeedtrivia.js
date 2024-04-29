@@ -10,11 +10,13 @@ module.exports = {
   usage: `.spt`,
   run: async (client, message, args, prefix) => {
     try {
-      if (await client.game.findUnique({
+      let check_data = await client.game.findUnique({
         where: {
           id: 1
         }
-      }).isPlaying)
+      })
+      
+      if (check_data.isPlaying)
         return message.channel.send("A game is already started!");
 
       await client.game.update({
@@ -52,7 +54,6 @@ module.exports = {
       const random_q = `question${currentQuestion}`;
       const q = question[random_q];
 
-      await client.game.set("interaction.interacted", []);
       let q_data = q.question;
       let q_1 = q.ans1;
       let q_2 = q.ans2;
