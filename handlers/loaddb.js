@@ -13,7 +13,7 @@ module.exports = async (client) => {
     client.game = client.prisma.GameData;
     client.user_data = client.prisma.UserData;
 
-    let gamedata = client.game.findUnique({
+    let gamedata = await client.game.findUnique({
       where: {
         id: 1,
       },
@@ -22,6 +22,7 @@ module.exports = async (client) => {
     if (!gamedata) {
       await client.game.create({
         data: {
+          id: 1,
           isPlaying: false,
           lastQuestion: 0,
         },
