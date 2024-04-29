@@ -13,8 +13,7 @@ module.exports = {
       let check_data = await client.game.findUnique({
         where: {
           id: 1
-        },
-        cacheStrategy: { swr: 3, ttl: 3 }
+        }
       })
       
       if (check_data.isPlaying)
@@ -27,7 +26,6 @@ module.exports = {
         data: {
           isPlaying: true
         },
-        cacheStrategy: { swr: 3, ttl: 3 }
       });
       let minq = 1;
       let maxq = 14;
