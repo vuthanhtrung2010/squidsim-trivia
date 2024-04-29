@@ -11,17 +11,12 @@ module.exports = {
     try {
       let lbDatas = args[0] || 15;
       
-      if (lbDatas > 25) return message.channel.send({ content: "You can't see over top 25 users!"})
+      if (lbDatas > 25) return message.channel.send({ content: "You can't see over top 25 users!"});
 
-      const users = await client.user_data.findMany();
+      const users = await client.user.findMany();
 
-      const userData = users.reduce((acc, { userID, data }) => {
-        acc[userID] = data;
-        return acc;
-      }, {});
-
-      const leaderboard = Object.entries(userData)
-        .sort(([, dataA], [, dataB]) => dataB.wins - dataA.wins)
+      const leaderboard = users
+        .sort((userA, userB) => userB.wins - userA.wins)
         .slice(0, lbDatas);
 
       const embed = new MessageEmbed()
@@ -29,8 +24,7 @@ module.exports = {
         .setColor("#ff0000");
 
       let leaderboardText = "";
-      leaderboard.forEach(([userId, data], index) => {
-        const user = client.users.cache.get(userId);
+      leaderboard.forEach((user, index) => {
         let placeEmoji = "";
 
         if (index === 0) placeEmoji = ":first_place:";
@@ -40,9 +34,7 @@ module.exports = {
         if (index < 3) leaderboardText += `${placeEmoji} `;
         else leaderboardText += `**${index + 1}.** `;
 
-        if (user) {
-          leaderboardText += `<@${user.id}>: ${data.wins} wins\n`;
-        }
+        leaderboardText += `<@${user.userID}>: ${user.wins} wins\n`;
       });
 
       embed.addFields({
