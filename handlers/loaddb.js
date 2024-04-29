@@ -1,6 +1,4 @@
-const { Database } = require("quickmongo");
-const { delay } = require("./functions");
-const OS = require("os");
+
 const { PrismaClient } = require("@prisma/client");
 
 module.exports = async (client) => {
