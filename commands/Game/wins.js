@@ -22,7 +22,8 @@ module.exports = {
       const userData = await client.user_data.findUnique({
         where: {
           userID: userId
-        }
+        },
+        cacheStrategy: { swr: 60, ttl: 60 }
       });
 
       if (!userData && !userData.wins || userData.wins === 0) {

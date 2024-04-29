@@ -35,7 +35,8 @@ module.exports = {
               data: {
                 userID: member.id,
                 wins: 0
-              }
+              },
+              cacheStrategy: { swr: 60, ttl: 60 }
             });
           }
         }
