@@ -10,7 +10,11 @@ module.exports = {
   usage: `.spt`,
   run: async (client, message, args, prefix) => {
     try {
-      if (await client.game.get(`game.game`))
+      if (await client.game.findUnique({
+        where: {
+          id: 1
+        }
+      }).isPlaying)
         return message.channel.send("A game is already started!");
 
       await client.game.update({
