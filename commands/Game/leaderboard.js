@@ -13,7 +13,7 @@ module.exports = {
       
       if (lbDatas > 25) return message.channel.send({ content: "You can't see over top 25 users!"});
 
-      const users = await client.user.findMany();
+      const users = await client.user_data.findMany();
 
       const leaderboard = users
         .sort((userA, userB) => userB.wins - userA.wins)
