@@ -36,7 +36,7 @@ module.exports = async (client) => {
           isPlaying: false,
           lastQuestion: 0,
         },
-        cacheStrategy: { swr: 120, ttl: 120 }
+        cacheStrategy: { swr: 2, ttl: 2 }
       });
     }
   });

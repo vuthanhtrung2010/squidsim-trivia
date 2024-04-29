@@ -14,7 +14,7 @@ module.exports = {
         where: {
           id: 1
         },
-        cacheStrategy: { swr: 60, ttl: 60 }
+        cacheStrategy: { swr: 3, ttl: 3 }
       })
       
       if (check_data.isPlaying)
@@ -27,7 +27,7 @@ module.exports = {
         data: {
           isPlaying: true
         },
-        cacheStrategy: { swr: 60, ttl: 60 }
+        cacheStrategy: { swr: 3, ttl: 3 }
       });
       let minq = 1;
       let maxq = 14;
@@ -52,7 +52,7 @@ module.exports = {
         data: {
           lastQuestion: currentQuestion
         },
-        cacheStrategy: { swr: 60, ttl: 60 }
+        cacheStrategy: { swr: 3, ttl: 3 }
       });
       const random_q = `question${currentQuestion}`;
       const q = question[random_q];
@@ -175,7 +175,7 @@ module.exports = {
           data: {
             isPlaying: false
           },
-          cacheStrategy: { swr: 60, ttl: 60 }
+          cacheStrategy: { swr: 3, ttl: 3 }
         });
 
         for (const userId of correct_user) {
@@ -183,7 +183,7 @@ module.exports = {
             where: {
               userID: userId
             },
-            cacheStrategy: { swr: 60, ttl: 60 }
+            cacheStrategy: { swr: 3, ttl: 3 }
           });
           if (!data) {
             await client.user_data.create({

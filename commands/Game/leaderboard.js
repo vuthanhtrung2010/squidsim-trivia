@@ -14,7 +14,7 @@ module.exports = {
       if (lbDatas > 25) return message.channel.send({ content: "You can't see over top 25 users!"});
 
       const users = await client.user_data.findMany({
-        cacheStrategy: { swr: 120, ttl: 120 }
+        cacheStrategy: { swr: 60, ttl: 60 }
       });
 
       const leaderboard = users
