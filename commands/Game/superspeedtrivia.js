@@ -162,13 +162,13 @@ module.exports = {
 
         row.components = [button1, button2, button3, button4];
 
-        await sentMessage.edit({
+        sentMessage.edit({
           content: `Time is over!`,
           embeds: [q_embed],
           components: [row],
         });
 
-        client.game.update({
+        await client.game.update({
           where: {
             id: 1
           },
