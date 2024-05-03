@@ -12,47 +12,47 @@ module.exports = {
     try {
       let check_data = await client.game.findUnique({
         where: {
-          id: 1
+          id: 1,
         },
-        cacheStrategy: { swr: 60, ttl: 60 }
-      })
-      
+        cacheStrategy: { swr: 60, ttl: 60 },
+      });
+
       if (check_data.isPlaying)
         return message.channel.send("A game is already started!");
 
       await client.game.update({
         where: {
-          id: 1
+          id: 1,
         },
         data: {
-          isPlaying: true
+          isPlaying: true,
         },
-        cacheStrategy: { swr: 60, ttl: 60 }
+        cacheStrategy: { swr: 60, ttl: 60 },
       });
       let minq = 1;
       let maxq = 14;
 
       let lastgamedata = await client.game.findUnique({
         where: {
-          id: 1
-        }
+          id: 1,
+        },
       });
-      
-      let lastQuestion = lastgamedata.lastQuestion
+
+      let lastQuestion = lastgamedata.lastQuestion;
       let currentQuestion;
-      
+
       do {
         currentQuestion = Math.floor(Math.random() * (maxq - minq + 1)) + minq;
       } while (lastQuestion && currentQuestion === lastQuestion);
 
       await client.game.update({
         where: {
-          id: 1
+          id: 1,
         },
         data: {
-          lastQuestion: currentQuestion
+          lastQuestion: currentQuestion,
         },
-        cacheStrategy: { swr: 60, ttl: 60 }
+        cacheStrategy: { swr: 60, ttl: 60 },
       });
       const random_q = `question${currentQuestion}`;
       const q = question[random_q];
@@ -170,40 +170,39 @@ module.exports = {
 
         await client.game.update({
           where: {
-            id: 1
+            id: 1,
           },
           data: {
-            isPlaying: false
+            isPlaying: false,
           },
-          cacheStrategy: { swr: 60, ttl: 60 }
+          cacheStrategy: { swr: 60, ttl: 60 },
         });
 
         for (const userId of correct_user) {
           let data = await client.user_data.findUnique({
             where: {
-              userID: userId
+              userID: userId,
             },
-            cacheStrategy: { swr: 3, ttl: 3 }
+            cacheStrategy: { swr: 3, ttl: 3 },
           });
           if (!data) {
             await client.user_data.create({
               data: {
                 userID: userId,
-                wins: 1
+                wins: 1,
               },
-              cacheStrategy: { swr: 60, ttl: 60 }
-            })
-          }
-          else {
+              cacheStrategy: { swr: 60, ttl: 60 },
+            });
+          } else {
             await client.user_data.update({
               where: {
-                userID: userId
+                userID: userId,
               },
               data: {
-                wins: data.wins + 1
+                wins: data.wins + 1,
               },
-              cacheStrategy: { swr: 60, ttl: 60 }
-            })
+              cacheStrategy: { swr: 60, ttl: 60 },
+            });
           }
         }
 

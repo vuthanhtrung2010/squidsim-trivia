@@ -1,5 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
-const { withAccelerate } = require("@prisma/extension-accelerate")
+const { withAccelerate } = require("@prisma/extension-accelerate");
 
 module.exports = async (client) => {
   return new Promise(async (res) => {
@@ -7,7 +7,7 @@ module.exports = async (client) => {
     console.log(`${String("[x] :: ")}Now loading the Database ...`);
     client.prisma = new PrismaClient().$extends(withAccelerate());
     console.log(
-      `[x] :: ` + `LOADED THE DATABASE after: ` + `${Date.now() - dateNow}ms`
+      `[x] :: ` + `LOADED THE DATABASE after: ` + `${Date.now() - dateNow}ms`,
     );
 
     client.game = client.prisma.GameData;
@@ -36,7 +36,7 @@ module.exports = async (client) => {
           isPlaying: false,
           lastQuestion: 0,
         },
-        cacheStrategy: { swr: 2, ttl: 2 }
+        cacheStrategy: { swr: 2, ttl: 2 },
       });
     }
   });

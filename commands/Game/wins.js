@@ -21,12 +21,12 @@ module.exports = {
 
       const userData = await client.user_data.findUnique({
         where: {
-          userID: userId
+          userID: userId,
         },
-        cacheStrategy: { swr: 60, ttl: 60 }
+        cacheStrategy: { swr: 60, ttl: 60 },
       });
 
-      if (!userData && !userData.wins || userData.wins === 0) {
+      if ((!userData && !userData.wins) || userData.wins === 0) {
         return message.channel.send(`<@${userId}> haven't won any games yet!`);
       }
 

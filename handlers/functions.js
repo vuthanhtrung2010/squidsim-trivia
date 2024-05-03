@@ -1,6 +1,6 @@
 module.exports = {
   escapeRegex,
-  delay
+  delay,
 };
 
 async function delay(delayInms) {

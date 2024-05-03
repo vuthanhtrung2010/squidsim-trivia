@@ -27,16 +27,16 @@ module.exports = {
         if (!member.user.bot) {
           const exist_check = await client.user_data.findUnique({
             where: {
-              userID: member.id
-            }
+              userID: member.id,
+            },
           });
           if (!exist_check) {
             await client.user_data.create({
               data: {
                 userID: member.id,
-                wins: 0
+                wins: 0,
               },
-              cacheStrategy: { swr: 60, ttl: 60 }
+              cacheStrategy: { swr: 60, ttl: 60 },
             });
           }
         }
