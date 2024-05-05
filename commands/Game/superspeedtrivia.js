@@ -30,7 +30,7 @@ module.exports = {
         cacheStrategy: { swr: 60, ttl: 60 },
       });
       let minq = 1;
-      let maxq = 14;
+      let maxq = 15;
 
       let lastgamedata = await client.game.findUnique({
         where: {
