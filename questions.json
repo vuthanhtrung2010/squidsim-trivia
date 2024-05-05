@@ -111,5 +111,13 @@
     "ans4": "Amusement Park",
     "question": "What is the primary location for the Squid Game competition?",
     "answer": 1
+  },
+  "question15": {
+    "ans1": "<@1089445042768334958>",
+    "ans2": "<@898255050592366642>",
+    "ans3": "<@1139406664584409159>",
+    "ans4": "<@493177799499055115>",
+    "question": "Who is the Lead Investigator?",
+    "answer": 1
   }
 }
