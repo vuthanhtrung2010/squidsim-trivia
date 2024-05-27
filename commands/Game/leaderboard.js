@@ -53,9 +53,6 @@ module.exports = {
       embed.setFooter("Use .lb <max count> to return max leaderboard datas");
 
       message.reply({ content: `<@${message.author.id}>`, embeds: [embed] });
-
-      const data = await client.user_data.findMany({});
-      client.caches.set("lbData", data)
     } catch (error) {
       console.error("An error occurred:", error);
     }

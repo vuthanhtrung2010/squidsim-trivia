@@ -47,6 +47,8 @@ module.exports = {
         .setColor("#ff0000");
 
       message.reply({ embeds: [embed] });
+
+      // Make sure up-to-date
       const data = await client.user_data.findUnique({
         where: {
           userID: userId,

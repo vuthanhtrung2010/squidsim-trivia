@@ -48,6 +48,7 @@ async function requirehandlers() {
     "command",
     "events",
     "loaddb",
+    "update_data"
   ]) {
     try {
       await require(`./handlers/${handler}`)(client);

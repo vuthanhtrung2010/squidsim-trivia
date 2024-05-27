@@ -1,5 +1,5 @@
-const Discord = require("discord.js");
 const fs = require("fs");
+
 module.exports = (client) => {
   /**
    * @INFO
@@ -12,6 +12,7 @@ module.exports = (client) => {
 
   client.caches = new Map()
 
+  // Ensure datas in in caches
   client.caches.set("isPlaying", false)
   client.caches.set("lastQuestion", 0)
 

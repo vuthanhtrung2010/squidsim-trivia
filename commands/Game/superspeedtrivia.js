@@ -146,7 +146,7 @@ module.exports = {
         client.caches.set("isPlaying", false)
 
         for (const userId of correct_user) {
-          await client.user_data.upsert({
+          const updated_data = await client.user_data.upsert({
             where: {
               userID: userId,
             },
@@ -161,6 +161,8 @@ module.exports = {
             },
           });
         }
+        
+        client.caches.set(`${updated_data.userID}.wins`, updated_data.wins)
 
         if (correct_user.length > 0) {
           const winners = correct_user

@@ -1,5 +1,4 @@
 const { PrismaClient } = require("@prisma/client");
-const { withAccelerate } = require("@prisma/extension-accelerate");
 
 module.exports = async (client) => {
   return new Promise(async (res) => {
