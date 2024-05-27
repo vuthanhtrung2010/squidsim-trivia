@@ -11,17 +11,10 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 model UserData {
   id               Int            @id @default(autoincrement())
   userID           String         @unique
   wins             Int
-}
-
-model GameData {
-  id               Int             @id @default(autoincrement())
-  lastQuestion     Int
-  isPlaying        Boolean         @default(false)
 }

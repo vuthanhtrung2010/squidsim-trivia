@@ -15,8 +15,8 @@ module.exports = {
       if (check_data === true)
         return message.channel.send("A game is already started!");
 
-+      client.caches.set("isPlaying", true)
-
+      client.caches.set("isPlaying", true)
+      
       let minq = 1;
       let maxq = 15;
 
@@ -146,29 +146,20 @@ module.exports = {
         client.caches.set("isPlaying", false)
 
         for (const userId of correct_user) {
-          let data = await client.user_data.findUnique({
+          await client.user_data.upsert({
             where: {
               userID: userId,
             },
-            cacheStrategy: { swr: 3, ttl: 3 },
+            update: {
+              wins: {
+                increment: 1
+              }
+            },
+            create: {
+              wins: 1,
+              userID: userId
+            },
           });
-          if (!data) {
-            await client.user_data.create({
-              data: {
-                userID: userId,
-                wins: 1,
-              },
-            });
-          } else {
-            await client.user_data.update({
-              where: {
-                userID: userId,
-              },
-              data: {
-                wins: data.wins + 1,
-              },
-            });
-          }
         }
 
         if (correct_user.length > 0) {
