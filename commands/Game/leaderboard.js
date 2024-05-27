@@ -15,10 +15,14 @@ module.exports = {
         return message.channel.send({
           content: "You can't see over top 25 users!",
         });
-
-      const users = await client.user_data.findMany({
-        cacheStrategy: { swr: 60, ttl: 60 },
-      });
+      let users
+      if (client.caches.has("lbData")) {
+        users = client.caches.get("lbData")
+      }
+      else {
+        users = await client.user_data.findMany({});
+        client.caches.set("lbData", users)
+      }
 
       const leaderboard = users
         .sort((userA, userB) => userB.wins - userA.wins)
@@ -49,6 +53,9 @@ module.exports = {
       embed.setFooter("Use .lb <max count> to return max leaderboard datas");
 
       message.reply({ content: `<@${message.author.id}>`, embeds: [embed] });
+
+      const data = await client.user_data.findMany({});
+      client.caches.set("lbData", data)
     } catch (error) {
       console.error("An error occurred:", error);
     }

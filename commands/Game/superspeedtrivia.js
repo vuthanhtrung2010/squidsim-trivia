@@ -10,50 +10,25 @@ module.exports = {
   usage: `.spt`,
   run: async (client, message, args, prefix) => {
     try {
-      let check_data = await client.game.findUnique({
-        where: {
-          id: 1,
-        },
-        cacheStrategy: { swr: 60, ttl: 60 },
-      });
+      let check_data = client.caches.get("isPlaying")
 
-      if (check_data.isPlaying)
+      if (check_data === true)
         return message.channel.send("A game is already started!");
 
-      await client.game.update({
-        where: {
-          id: 1,
-        },
-        data: {
-          isPlaying: true,
-        },
-        cacheStrategy: { swr: 60, ttl: 60 },
-      });
++      client.caches.set("isPlaying", true)
+
       let minq = 1;
       let maxq = 15;
 
-      let lastgamedata = await client.game.findUnique({
-        where: {
-          id: 1,
-        },
-      });
-
-      let lastQuestion = lastgamedata.lastQuestion;
+      let lastQuestion = client.caches.get("lastQuestion");
       let currentQuestion;
 
       do {
         currentQuestion = Math.floor(Math.random() * (maxq - minq + 1)) + minq;
       } while (lastQuestion && currentQuestion === lastQuestion);
 
-      await client.game.update({
-        where: {
-          id: 1,
-        },
-        data: {
-          lastQuestion: currentQuestion,
-        },
-        cacheStrategy: { swr: 60, ttl: 60 },
-      });
+      client.caches.set("lastQuestion", currentQuestion)
+
       const random_q = `question${currentQuestion}`;
       const q = question[random_q];
 
@@ -96,7 +71,7 @@ module.exports = {
       **2.** ${q_2}.
       **3.** ${q_3}.
       **4.** ${q_4}.
-      `,
+      `
         )
         .setFooter("Choose wisely! - Made by trungisreal");
 
@@ -104,7 +79,7 @@ module.exports = {
         button1,
         button2,
         button3,
-        button4,
+        button4
       );
 
       const sentMessage = await message.reply({
@@ -168,15 +143,7 @@ module.exports = {
           components: [row],
         });
 
-        await client.game.update({
-          where: {
-            id: 1,
-          },
-          data: {
-            isPlaying: false,
-          },
-          cacheStrategy: { swr: 60, ttl: 60 },
-        });
+        client.caches.set("isPlaying", false)
 
         for (const userId of correct_user) {
           let data = await client.user_data.findUnique({
@@ -191,7 +158,6 @@ module.exports = {
                 userID: userId,
                 wins: 1,
               },
-              cacheStrategy: { swr: 60, ttl: 60 },
             });
           } else {
             await client.user_data.update({
@@ -201,7 +167,6 @@ module.exports = {
               data: {
                 wins: data.wins + 1,
               },
-              cacheStrategy: { swr: 60, ttl: 60 },
             });
           }
         }

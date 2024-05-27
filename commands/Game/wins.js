@@ -18,19 +18,23 @@ module.exports = {
           userId = userId.slice(1);
         }
       }
+      let userData;
 
-      const userData = await client.user_data.findUnique({
-        where: {
-          userID: userId,
-        },
-        cacheStrategy: { swr: 60, ttl: 60 },
-      });
+      if (client.caches.has(`${userId}.wins`)) {
+        userData = client.caches.get(`${userId}.wins`);
+      } else {
+        userData = await client.user_data.findUnique({
+          where: {
+            userID: userId,
+          },
+        });
+      }
 
       if ((!userData && !userData.wins) || userData.wins === 0) {
         return message.channel.send(`<@${userId}> haven't won any games yet!`);
       }
 
-      const wins = userData.wins;
+      const wins = userData.wins || userData;
       const user = await client.users.fetch(userId);
 
       const embed = new MessageEmbed()
@@ -43,6 +47,12 @@ module.exports = {
         .setColor("#ff0000");
 
       message.reply({ embeds: [embed] });
+      const data = await client.user_data.findUnique({
+        where: {
+          userID: userId,
+        },
+      });
+      client.caches.set(`${userId}.wins`, data.wins)
     } catch (error) {
       console.error("An error occurred:", error);
     }
