@@ -143,10 +143,11 @@ module.exports = {
           components: [row],
         });
 
-        client.caches.set("isPlaying", false)
-
+        client.caches.set("isPlaying", false);
+        
+        let updated_data;
         for (const userId of correct_user) {
-          const updated_data = await client.user_data.upsert({
+          updated_data = await client.user_data.upsert({
             where: {
               userID: userId,
             },
@@ -161,7 +162,7 @@ module.exports = {
             },
           });
         }
-        
+
         client.caches.set(`${updated_data.userID}.wins`, updated_data.wins)
 
         if (correct_user.length > 0) {
