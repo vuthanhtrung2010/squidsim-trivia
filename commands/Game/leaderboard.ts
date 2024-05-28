@@ -9,18 +9,19 @@ module.exports = {
   usage: ".leaderboard",
   run: async (client, message, args, prefix) => {
     try {
-      let lbDatas = parseInt(args[0]) || 15;
+      let lbDatas: number = 25;
 
-      if (lbDatas > 25)
-        return message.channel.send({
-          content: "You can't see over top 25 users!",
-        });
       let users
       if (client.caches.has("lbData")) {
         users = client.caches.get("lbData")
       }
       else {
-        users = await client.user_data.findMany({});
+        users = await client.user_data.findMany({
+          orderBy: {
+            wins: 'desc'
+          },
+          take: lbDatas
+        });
         client.caches.set("lbData", users)
       }
 
@@ -50,7 +51,6 @@ module.exports = {
         name: `Top ${lbDatas} users with the most wins:`,
         value: leaderboardText,
       });
-      embed.setFooter("Use .lb <max count> to return max leaderboard datas");
 
       message.reply({ content: `<@${message.author.id}>`, embeds: [embed] });
     } catch (error) {

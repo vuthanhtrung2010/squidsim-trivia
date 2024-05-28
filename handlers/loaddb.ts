@@ -11,6 +11,6 @@ module.exports = async (client) => {
       `[x] :: ` + `LOADED THE DATABASE after: ` + `${Date.now() - dateNow}ms`,
     );
 
-    client.prisma.userData = client.prisma.UserData;
+    client.user_data = client.prisma.UserData;
   });
 };

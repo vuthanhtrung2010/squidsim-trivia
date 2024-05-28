@@ -14,7 +14,6 @@ module.exports = {
         embeds: [
           new MessageEmbed()
             .setColor("RED")
-
             .setTitle("Missing perm"),
         ],
       });
@@ -23,7 +22,6 @@ module.exports = {
         embeds: [
           new MessageEmbed()
             .setColor("RED")
-
             .setTitle(eval("Provide code to eval")),
         ],
       });
@@ -53,7 +51,7 @@ module.exports = {
         .setColor("BLUE");
 
       let input_msg = `\`\`\`js\n${args.join(" ")}\`\`\``;
-      let output_msg = `\`\`\`${string.substring(0, 1024)}\`\`\``;
+      let output_msg = `\`\`\`${string.substring(0, 1000)}\`\`\``;
       //(over)write embed description
       evalEmbed.addFields(
         { name: ":inbox_tray: Input", value: input_msg },
