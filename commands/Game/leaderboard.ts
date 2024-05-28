@@ -26,8 +26,6 @@ module.exports = {
       }
 
       const leaderboard = users
-        .sort((userA, userB) => userB.wins - userA.wins)
-        .slice(0, lbDatas);
 
       const embed = new MessageEmbed()
         .setTitle("Leaderboard")
