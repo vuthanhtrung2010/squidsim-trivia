@@ -1,9 +1,9 @@
-module.exports = {
+export {
   escapeRegex,
   delay,
 };
 
-async function delay(delayInms) {
+async function delay(delayInms: number) {
   try {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -15,7 +15,7 @@ async function delay(delayInms) {
   }
 }
 
-function escapeRegex(str) {
+function escapeRegex(str: string): string {
   try {
     if (!str || typeof str != "string") return "";
     return str.replace(/[.*+?^${}()|[\]\\]/g, `\\$&`);

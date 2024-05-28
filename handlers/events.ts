@@ -1,13 +1,14 @@
-const fs = require("fs");
-const allevents = [];
-module.exports = (client) => {
+import { readdirSync } from 'fs';
+
+const allevents: string[] = [];
+
+const loadEvents = async (client: any): Promise<void> => {
   try {
-    let dateNow = Date.now();
+    const dateNow = Date.now();
     console.log(`${String("[x] :: ")}Now loading the Events ...`);
-    const load_dir = (dir) => {
-      const event_files = fs
-        .readdirSync(`./events/${dir}`)
-        .filter((file) => file.endsWith(".js"));
+
+    const load_dir = async (dir: string) => {
+      const event_files = readdirSync(`${process.cwd()}/dist/events/${dir}`).filter((file) => file.endsWith(".js"));
       for (const file of event_files) {
         try {
           const event = require(`../events/${dir}/${file}`);
@@ -20,13 +21,13 @@ module.exports = (client) => {
         }
       }
     };
+
     ["client", "guild"].forEach((e) => load_dir(e));
 
     console.log(
-      `[x] :: ` +
-        `LOADED THE ${allevents.length} EVENTS after: ` +
-        `${Date.now() - dateNow}ms`,
+      `[x] :: LOADED THE ${allevents.length} EVENTS after: ${Date.now() - dateNow}ms`
     );
+
     try {
       const stringlength2 = 69;
       console.log("\n");
@@ -60,3 +61,5 @@ module.exports = (client) => {
     console.log(String(e.stack));
   }
 };
+
+export default loadEvents;

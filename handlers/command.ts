@@ -1,5 +1,5 @@
-const { readdirSync } = require("fs");
-const { MessageEmbed } = require("discord.js");
+import { readdirSync } from "fs";
+
 console.log(
   "Welcome to SERVICE HANDLER /--/ By https://trung.is-a.dev /--/ Discord: trungisreal",
 );
@@ -8,7 +8,7 @@ module.exports = (client) => {
   console.log(`${String("[x] :: ")}Now loading the Commands ...`);
   try {
     readdirSync("./commands/").forEach((dir) => {
-      const commands = readdirSync(`./commands/${dir}/`).filter((file) =>
+      const commands = readdirSync(`${process.cwd()}/dist/commands/${dir}/`).filter((file) =>
         file.endsWith(".js"),
       );
       for (let file of commands) {

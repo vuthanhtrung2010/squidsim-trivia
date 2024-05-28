@@ -1,11 +1,8 @@
-const Discord = require("discord.js");
-const { MessageEmbed } = require("discord.js");
+import Discord from 'discord.js';
 
 // Here the event starts
 module.exports = async (client, message) => {
   try {
-    let dbEvent = Date.now();
-
     // If the message is not in a guild (aka in dms) or is from a webhook, ignore it
     if (
       !message.guild ||
@@ -58,21 +55,7 @@ module.exports = async (client, message) => {
     const cmd = args.shift()?.toLowerCase();
 
     // If no command is added, return an error
-    if (!cmd) {
-      if (matchedPrefix.includes(client.user.id))
-        return message
-          .reply({
-            embeds: [
-              new Discord.MessageEmbed()
-                .setColor(es.color)
-                .setTitle(
-                  `<a:yes:958653519513133078> **To see all Commands type: \`${prefix}help\`!**`,
-                ),
-            ],
-          })
-          .catch(console.error);
-      return;
-    }
+    if (!cmd) return
 
     // Get the command from the collection
     let command = client.commands.get(cmd);

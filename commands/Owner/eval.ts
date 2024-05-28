@@ -1,9 +1,6 @@
-const {
-  MessageEmbed,
-  Util: { splitMessage },
-} = require(`discord.js`);
-const fs = require("fs");
-const { inspect } = require(`util`);
+import { MessageEmbed } from "discord.js";
+import { inspect } from 'util';
+
 module.exports = {
   name: `eval`,
   category: `Owner`,
@@ -37,7 +34,7 @@ module.exports = {
           embeds: [
             new MessageEmbed()
               .setTitle(eval("Trung | Evaluation"))
-              .setColor(es.color)
+              .setColor("RED")
               .addFields(
                 { name: ":inbox_tray: Input", value: args.join(` `) },
                 {
@@ -54,15 +51,9 @@ module.exports = {
       let evalEmbed = new MessageEmbed()
         .setTitle("Trung | Evaluation")
         .setColor("BLUE");
-      //split the description
-      const splitDescription = splitMessage(string, {
-        maxLength: 1024,
-        char: `\n`,
-        prepend: ``,
-        append: ``,
-      });
+
       let input_msg = `\`\`\`js\n${args.join(" ")}\`\`\``;
-      let output_msg = `\`\`\`${splitDescription[0]}\`\`\``;
+      let output_msg = `\`\`\`${string.substring(0, 1024)}\`\`\``;
       //(over)write embed description
       evalEmbed.addFields(
         { name: ":inbox_tray: Input", value: input_msg },

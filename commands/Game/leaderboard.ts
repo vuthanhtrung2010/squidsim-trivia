@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from 'discord.js';
 
 module.exports = {
   name: "leaderboard",
@@ -9,7 +9,7 @@ module.exports = {
   usage: ".leaderboard",
   run: async (client, message, args, prefix) => {
     try {
-      let lbDatas = args[0] || 15;
+      let lbDatas = parseInt(args[0]) || 15;
 
       if (lbDatas > 25)
         return message.channel.send({

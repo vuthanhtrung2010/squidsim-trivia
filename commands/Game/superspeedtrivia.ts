@@ -1,5 +1,5 @@
-const { MessageEmbed, MessageButton, MessageActionRow } = require(`discord.js`);
-const question = require(`../../questions.json`);
+import { MessageEmbed, MessageButton, MessageActionRow } from 'discord.js';
+import question from '../../questions.json'
 
 module.exports = {
   name: `superspeedtrivia`,
@@ -65,7 +65,7 @@ module.exports = {
       const q_embed = new MessageEmbed()
         .setTitle("Super Speed Trivia Question")
         .setDescription(
-          `
+          `TYPESCRIPT
       ${q_data}
       **1.** ${q_1}.
       **2.** ${q_2}.
@@ -147,7 +147,7 @@ module.exports = {
         
         let updated_data;
         for (const userId of correct_user) {
-          updated_data = await client.user_data.upsert({
+          updated_data = await client.prisma.userData.upsert({
             where: {
               userID: userId,
             },
@@ -161,9 +161,8 @@ module.exports = {
               userID: userId
             },
           });
+          client.caches.set(`${userId}.wins`, updated_data.wins)
         }
-
-        client.caches.set(`${updated_data.userID}.wins`, updated_data.wins)
 
         if (correct_user.length > 0) {
           const winners = correct_user

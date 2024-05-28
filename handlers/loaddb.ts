@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 
 module.exports = async (client) => {
   return new Promise(async (res) => {
@@ -11,6 +11,6 @@ module.exports = async (client) => {
       `[x] :: ` + `LOADED THE DATABASE after: ` + `${Date.now() - dateNow}ms`,
     );
 
-    client.user_data = client.prisma.UserData;
+    client.prisma.userData = client.prisma.UserData;
   });
 };

@@ -1,11 +1,11 @@
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from 'discord.js';
 
 module.exports = {
   name: "wins",
   category: "Game",
   description: "Displays your number of wins.",
   cooldown: 1,
-  usage: ".wins",
+  usage: "wins",
   run: async (client, message, args, prefix) => {
     try {
       let userId = args[0];
@@ -23,7 +23,7 @@ module.exports = {
       if (client.caches.has(`${userId}.wins`)) {
         userData = client.caches.get(`${userId}.wins`);
       } else {
-        userData = await client.user_data.findUnique({
+        userData = await client.prisma.userData.findUnique({
           where: {
             userID: userId,
           },
@@ -49,7 +49,7 @@ module.exports = {
       message.reply({ embeds: [embed] });
 
       // Make sure up-to-date
-      const data = await client.user_data.findUnique({
+      const data = await client.prisma.userData.findUnique({
         where: {
           userID: userId,
         },

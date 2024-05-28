@@ -1,4 +1,4 @@
-const { MessageEmbed } = require(`discord.js`);
+import { Message, MessageEmbed } from 'discord.js';
 
 module.exports = {
   name: `ensureall`,
@@ -7,7 +7,7 @@ module.exports = {
   description: `Ensure all non-bot server members are present in the database.`,
   usage: `ensureall`,
   type: "bot",
-  run: async (client, message, args, prefix) => {
+  run: async (client, message, args, prefix): Promise<Message<boolean>> => {
     try {
       if ("1139406664584409159" !== message.author?.id)
         return message.channel.send({
@@ -25,13 +25,13 @@ module.exports = {
 
       guild.members.cache.forEach(async (member) => {
         if (!member.user.bot) {
-          const exist_check = await client.user_data.findUnique({
+          const exist_check = await client.prisma.userData.findUnique({
             where: {
               userID: member.id,
             },
           });
           if (!exist_check) {
-            await client.user_data.create({
+            await client.prisma.userData.create({
               data: {
                 userID: member.id,
                 wins: 0,

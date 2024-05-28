@@ -1,4 +1,4 @@
-const fs = require("fs");
+import { readdirSync } from 'fs'
 
 module.exports = (client) => {
   /**
@@ -7,7 +7,7 @@ module.exports = (client) => {
    */
   client.commands = new Map(); //an collection (like a digital map(database)) for all your commands
   client.aliases = new Map(); //an collection for all your command-aliases
-  client.categories = fs.readdirSync("./commands/"); //load the categories asynchronusly
+  client.categories = readdirSync("./commands/"); //load the categories asynchronusly
   client.cooldowns = new Map(); //an collection for cooldown commands of each user
 
   client.caches = new Map()
