@@ -65,7 +65,7 @@ module.exports = {
       const q_embed = new MessageEmbed()
         .setTitle("Super Speed Trivia Question")
         .setDescription(
-          `TYPESCRIPT
+          `
       ${q_data}
       **1.** ${q_1}.
       **2.** ${q_2}.
