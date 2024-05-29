@@ -1,4 +1,5 @@
 import { MessageEmbed } from 'discord.js';
+import { getLbData } from '../../handlers/functions';
 
 module.exports = {
   name: "leaderboard",
@@ -11,17 +12,16 @@ module.exports = {
     try {
       let lbDatas: number = 25;
 
-      let users
+      // Define types:
+      type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
+      type user_data = ThenArg<ReturnType<typeof getLbData>>
+
+      let users: user_data
       if (client.caches.has("lbData")) {
         users = client.caches.get("lbData")
       }
       else {
-        users = await client.user_data.findMany({
-          orderBy: {
-            wins: 'desc'
-          },
-          take: lbDatas
-        });
+        users = await getLbData(client)
         client.caches.set("lbData", users)
       }
 

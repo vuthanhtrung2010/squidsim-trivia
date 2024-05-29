@@ -1,9 +1,4 @@
-export {
-  escapeRegex,
-  delay,
-};
-
-async function delay(delayInms: number) {
+export async function delay(delayInms: number) {
   try {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -15,13 +10,22 @@ async function delay(delayInms: number) {
   }
 }
 
-function escapeRegex(str: string): string {
+export function escapeRegex(str: string): string {
   try {
     if (!str || typeof str != "string") return "";
     return str.replace(/[.*+?^${}()|[\]\\]/g, `\\$&`);
   } catch (e) {
     console.log(String(e.stack));
   }
+}
+
+export async function getLbData(client) {
+  return await client.user_data.findMany({
+    orderBy: {
+      wins: 'desc'
+    },
+    take: 25
+  });
 }
 
 Object.defineProperty(module.exports, "__esModule", {
