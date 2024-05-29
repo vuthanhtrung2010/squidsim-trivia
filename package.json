@@ -2,7 +2,7 @@
   "name": "squidsim_trivia",
   "version": "11.0.0",
   "description": "A Discord Bot made by: trungisreal",
-  "main": "index.js",
+  "main": "dist/index.js",
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.0",
     "@prisma/client": "^5.13.0",

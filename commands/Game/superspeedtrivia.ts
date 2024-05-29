@@ -16,29 +16,37 @@ module.exports = {
         return message.channel.send("A game is already started!");
 
       client.caches.set("isPlaying", true)
-      
-      let minq = 1;
-      let maxq = 15;
 
-      let lastQuestion = client.caches.get("lastQuestion");
-      let currentQuestion;
+      let lastQuestion: number = client.caches.get("lastQuestion");
+      let currentQuestion: number;
 
       do {
-        currentQuestion = Math.floor(Math.random() * (maxq - minq + 1)) + minq;
+        currentQuestion = Math.floor(Math.random() * Object.keys(question).length) + 1;
       } while (lastQuestion && currentQuestion === lastQuestion);
 
       client.caches.set("lastQuestion", currentQuestion)
 
       const random_q = `question${currentQuestion}`;
-      const q = question[random_q];
+      // Assign types to question, strict check
+      interface question_data {
+        ans1: string,
+        ans2: string,
+        ans3: string,
+        ans4: string,
+        question: string,
+        answer: 1 | 2 | 3 | 4
+      }
 
-      let q_data = q.question;
-      let q_1 = q.ans1;
-      let q_2 = q.ans2;
-      let q_3 = q.ans3;
-      let q_4 = q.ans4;
+      const q: question_data = question[random_q];
 
-      let q_ans = q.answer;
+      // Assign data to variables
+      const q_data = q.question;
+      const q_1 = q.ans1;
+      const q_2 = q.ans2;
+      const q_3 = q.ans3;
+      const q_4 = q.ans4;
+
+      const q_ans = q.answer;
 
       let button1 = new MessageButton()
         .setStyle("PRIMARY")
