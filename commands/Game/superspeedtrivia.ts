@@ -68,8 +68,9 @@ module.exports = {
         .setCustomId("4")
         .setEmoji("4️⃣");
 
-      let correct_user = [];
-      let interacted = [];
+      let correct_user: string[] = [];
+      let failure_user: string[] = []
+      let interacted: string[] = [];
       const q_embed = new MessageEmbed()
         .setTitle("Super Speed Trivia Question")
         .setDescription(
@@ -125,12 +126,15 @@ module.exports = {
               ephemeral: true,
             });
           } else {
+            failure_user.push(interaction.user.id)
+
             await interaction.reply({
               content: "You chose the wrong answer!",
               ephemeral: true,
             });
           }
 
+          // Add the user as interacted
           interacted.push(interaction.user.id);
         } catch (error) {
           console.error("An error occurred:", error);
@@ -153,31 +157,37 @@ module.exports = {
 
         client.caches.set("isPlaying", false);
         
-        let updated_data;
-        for (const userId of correct_user) {
-          updated_data = await client.prisma.userData.upsert({
-            where: {
-              userID: userId,
-            },
-            update: {
-              wins: {
-                increment: 1
-              }
-            },
-            create: {
-              wins: 1,
-              userID: userId
-            },
-          });
-          client.caches.set(`${userId}.wins`, updated_data.wins)
-        }
+        await addWins(client, correct_user) // Add wins to the users
+        await addLost(client, failure_user); // Add stats lost to the failure users
 
         if (correct_user.length > 0) {
           const winners = correct_user
             .map((userId) => `<@${userId}>`)
             .join(", ");
+          
           const congratulationsMessage = `Congratulations ${winners}! You have the correct answer!\nYou have been added 1 win.`;
-          message.channel.send(congratulationsMessage);
+          return message.channel.send(congratulationsMessage).then( // Send the message then add the executor stats.
+            await client.prisma.userData.upsert({
+              where: {
+                userID: message.author.id,
+              },
+              update: {
+                stats: {
+                  commands: {
+                    increment: 1
+                  }
+                }
+              },
+              create: {
+                wins: 0,
+                userID: message.author.id,
+                stats: {
+                  lost: 0,
+                  commands: 1
+                }
+              },
+            })
+          );
         }
       });
     } catch (error) {
@@ -185,3 +195,55 @@ module.exports = {
     }
   },
 };
+
+async function addWins(client, users) {
+  let updated_data
+  for (const userId of users) {
+    updated_data = await client.prisma.userData.upsert({
+      where: {
+        userID: userId,
+      },
+      update: {
+        wins: {
+          increment: 1
+        }
+      },
+      create: {
+        wins: 1,
+        userID: userId,
+        stats: {
+          lost: 0,
+          commands: 0
+        }
+      },
+    });
+    client.caches.set(`${userId}.wins`, updated_data.wins)
+  }
+}
+
+async function addLost(client, users) {
+  let updated_data
+  for (const userId of users) {
+    updated_data = await client.prisma.userData.upsert({
+      where: {
+        userID: userId,
+      },
+      update: {
+        stats: {
+          lost: {
+            increment: 1
+          }
+        }
+      },
+      create: {
+        wins: 0,
+        userID: userId,
+        stats: {
+          lost: 1,
+          commands: 0
+        }
+      },
+    });
+    client.caches.set(`${userId}.lost`, updated_data.stats.lost)
+  }
+}
