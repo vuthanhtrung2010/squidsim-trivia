@@ -4,7 +4,7 @@
   "description": "A Discord Bot made by: trungisreal",
   "main": "dist/index.js",
   "dependencies": {
-    "@dotenvx/dotenvx": "^0.44.0",
+    "@dotenvx/dotenvx": "^0.45.0",
     "@prisma/client": "^5.13.0",
     "cpu-stat": "^2.0.1",
     "cron": "^3.0.0",
