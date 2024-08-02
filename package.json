@@ -4,10 +4,10 @@
   "description": "A Discord Bot made by: trungisreal",
   "main": "dist/index.js",
   "dependencies": {
-    "@dotenvx/dotenvx": "^0.44.0",
-    "@prisma/client": "^5.13.0",
+    "@dotenvx/dotenvx": "^1.6.4",
+    "@prisma/client": "^5.17.0",
     "cpu-stat": "^2.0.1",
-    "cron": "^3.0.0",
+    "cron": "^3.1.7",
     "discord.js": "^13.17.1",
     "lodash": "^4.17.21"
   },
@@ -19,8 +19,8 @@
     "start": "node index.js"
   },
   "devDependencies": {
-    "npm-run-all2": "^6.2.0",
-    "prisma": "^5.13.0",
-    "typescript": "^5.4.5"
+    "npm-run-all2": "^6.2.2",
+    "prisma": "^5.17.0",
+    "typescript": "^5.5.4"
   }
 }
