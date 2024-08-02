@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { inspect } from 'util';
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
     if ("1139406664584409159" !== message.author?.id)
       return message.channel.send({
         embeds: [
-          new MessageEmbed()
+          new EmbedBuilder()
             .setColor("RED")
             .setTitle("Missing perm"),
         ],
@@ -20,7 +20,7 @@ module.exports = {
     if (!args[0])
       return message.channel.send({
         embeds: [
-          new MessageEmbed()
+          new EmbedBuilder()
             .setColor("RED")
             .setTitle(eval("Provide code to eval")),
         ],
@@ -30,7 +30,7 @@ module.exports = {
       if (args.join(` `).includes(`token`))
         return message.channel.send({
           embeds: [
-            new MessageEmbed()
+            new EmbedBuilder()
               .setTitle(eval("Trung | Evaluation"))
               .setColor("RED")
               .addFields(
@@ -46,7 +46,7 @@ module.exports = {
       evaled = await eval(args.join(` `));
       //make string out of the evaluation
       let string = inspect(evaled);
-      let evalEmbed = new MessageEmbed()
+      let evalEmbed = new EmbedBuilder()
         .setTitle("Trung | Evaluation")
         .setColor("BLUE");
 
@@ -63,7 +63,7 @@ module.exports = {
       console.log(String(e.stack));
       return message.channel.send({
         embeds: [
-          new MessageEmbed()
+          new EmbedBuilder()
             .setColor("RED")
             .setTitle("Err orrcured!")
             .setDescription(`Error \`\`\`${e}\`\`\``),

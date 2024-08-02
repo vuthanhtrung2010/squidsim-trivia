@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 
 module.exports = {
   name: "wins",
@@ -37,7 +37,7 @@ module.exports = {
       const wins = userData.wins || userData;
       const user = await client.users.fetch(userId);
 
-      const embed = new MessageEmbed()
+      const embed = new EmbedBuilder()
         .setTitle("Wins Count")
         .setDescription(`<@${userId}> have ${wins} wins.`)
         .setAuthor({

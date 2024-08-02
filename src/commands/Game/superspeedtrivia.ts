@@ -1,5 +1,5 @@
-import { MessageEmbed, MessageButton, MessageActionRow } from 'discord.js';
-import question from '../../questions.json'
+import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
+import question from '../../../questions.json'
 
 module.exports = {
   name: `superspeedtrivia`,
@@ -48,30 +48,30 @@ module.exports = {
 
       const q_ans = q.answer;
 
-      let button1 = new MessageButton()
-        .setStyle("PRIMARY")
+      let button1 = new ButtonBuilder()
+        .setStyle(ButtonStyle.Primary)
         .setCustomId("1")
         .setEmoji("1️⃣");
 
-      let button2 = new MessageButton()
-        .setStyle("PRIMARY")
+      let button2 = new ButtonBuilder()
+        .setStyle(ButtonStyle.Primary)
         .setCustomId("2")
         .setEmoji("2️⃣");
 
-      let button3 = new MessageButton()
-        .setStyle("PRIMARY")
+      let button3 = new ButtonBuilder()
+        .setStyle(ButtonStyle.Primary)
         .setCustomId("3")
         .setEmoji("3️⃣");
 
-      let button4 = new MessageButton()
-        .setStyle("PRIMARY")
+      let button4 = new ButtonBuilder()
+        .setStyle(ButtonStyle.Primary)
         .setCustomId("4")
         .setEmoji("4️⃣");
 
       let correct_user: string[] = [];
       let failure_user: string[] = []
       let interacted: string[] = [];
-      const q_embed = new MessageEmbed()
+      const q_embed = new EmbedBuilder()
         .setTitle("Super Speed Trivia Question")
         .setDescription(
           `
@@ -84,7 +84,7 @@ module.exports = {
         )
         .setFooter("Choose wisely! - Made by trungisreal");
 
-      const row = new MessageActionRow().addComponents(
+      const row = new ActionRowBuilder().addComponents(
         button1,
         button2,
         button3,

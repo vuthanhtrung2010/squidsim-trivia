@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from 'discord.js';
+import { Message, EmbedBuilder } from 'discord.js';
 
 module.exports = {
   name: `ensureall`,
@@ -12,7 +12,7 @@ module.exports = {
       if ("1139406664584409159" !== message.author?.id)
         return message.channel.send({
           embeds: [
-            new MessageEmbed()
+            new EmbedBuilder()
               .setColor("RED")
               .setTitle("Missing permission")
               .setDescription("You are not authorized to use this command."),
@@ -44,7 +44,7 @@ module.exports = {
 
       message.channel.send({
         embeds: [
-          new MessageEmbed()
+          new EmbedBuilder()
             .setColor("GREEN")
             .setTitle("Database Ensure Complete")
             .setDescription(
@@ -56,7 +56,7 @@ module.exports = {
       console.error("An error occurred:", error);
       message.channel.send({
         embeds: [
-          new MessageEmbed()
+          new EmbedBuilder()
             .setColor("RED")
             .setTitle("Error")
             .setDescription(

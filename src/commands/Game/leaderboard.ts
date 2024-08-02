@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { getLbData } from '../../handlers/functions';
 
 module.exports = {
@@ -27,7 +27,7 @@ module.exports = {
 
       const leaderboard = users
 
-      const embed = new MessageEmbed()
+      const embed = new EmbedBuilder()
         .setTitle("Leaderboard")
         .setColor("#ff0000");
 
