@@ -9,7 +9,7 @@ export const Command: MessageCommand = {
   description: `Do a quick quiz`,
   cooldown: 10,
   usage: `.spt`,
-  run: async (client, message, args, prefix): Promise<any> => {
+  run: async (client, message, args, prefix) => {
     try {
       let check_data = client.caches.get("isPlaying")
 
@@ -173,11 +173,8 @@ export const Command: MessageCommand = {
             .join(", ");
 
           const congratulationsMessage = `Congratulations ${winners}! You have the correct answer!\nYou have been added 1 win.`;
-          return message.channel.send(congratulationsMessage).then( // Send the message then add the executor stats.
-            async () => {
-              await addCommandStats(client, message);
-            }
-          );
+          message.channel.send(congratulationsMessage)
+          await addCommandStats(client, message);
         }
       });
     } catch (error) {
