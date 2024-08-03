@@ -101,3 +101,11 @@ export function duration(duration: number, useMilli: boolean = false) {
     return parts;
   }
 }
+
+type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
+type user_data = ThenArg<ReturnType<typeof getLbData>>
+
+export async function updateLbData(client: ExtendedClient) {
+  const data: user_data = await getLbData(client)
+  client.caches.set("lbData", data)
+};

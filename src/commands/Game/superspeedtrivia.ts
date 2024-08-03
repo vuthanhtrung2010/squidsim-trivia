@@ -1,6 +1,7 @@
 import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ButtonInteraction, Message } from 'discord.js';
 import question from '../../../questions.json';
 import { ExtendedClient, MessageCommand } from '../../types';
+import { updateLbData } from '../../handlers/functions';
 
 export const Command: MessageCommand = {
   name: `superspeedtrivia`,
@@ -164,8 +165,8 @@ export const Command: MessageCommand = {
 
         client.caches.set("isPlaying", false);
 
-        await addWins(client, correct_user) // Add wins to the users
         await addLost(client, failure_user); // Add stats lost to the failure users
+        await addCommandStats(client, message); // Add stats commands to the user
 
         if (correct_user.length > 0) {
           const winners = correct_user
@@ -174,7 +175,8 @@ export const Command: MessageCommand = {
 
           const congratulationsMessage = `Congratulations ${winners}! You have the correct answer!\nYou have been added 1 win.`;
           message.channel.send(congratulationsMessage)
-          await addCommandStats(client, message);
+          await addWins(client, correct_user) // Add wins to the users
+          await updateLbData(client); // Update the leaderboard data
         }
       });
     } catch (error) {
