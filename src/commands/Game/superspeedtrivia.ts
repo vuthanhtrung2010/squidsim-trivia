@@ -1,5 +1,5 @@
-import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, GuildMember } from 'discord.js';
-import question from '../../../questions.json'
+import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ButtonInteraction, Message } from 'discord.js';
+import question from '../../../questions.json';
 import { ExtendedClient, MessageCommand } from '../../types';
 
 export const Command: MessageCommand = {
@@ -18,6 +18,18 @@ export const Command: MessageCommand = {
 
       client.caches.set("isPlaying", true)
 
+      // Assign types to question, strict check
+      interface question_data {
+        [key: string]: {
+          ans1: string,
+          ans2: string,
+          ans3: string,
+          ans4: string,
+          question: string,
+          answer: 1 | 2 | 3 | 4
+        };
+      }
+
       let lastQuestion: number = client.caches.get("lastQuestion");
       let currentQuestion: number;
 
@@ -28,17 +40,8 @@ export const Command: MessageCommand = {
       client.caches.set("lastQuestion", currentQuestion)
 
       const random_q = `question${currentQuestion}`;
-      // Assign types to question, strict check
-      interface question_data {
-        ans1: string,
-        ans2: string,
-        ans3: string,
-        ans4: string,
-        question: string,
-        answer: 1 | 2 | 3 | 4
-      }
 
-      const q: question_data = question[random_q];
+      const q = (question as question_data)[random_q];
 
       // Assign data to variables
       const q_data = q.question;
@@ -83,9 +86,11 @@ export const Command: MessageCommand = {
       **4.** ${q_4}.
       `
         )
-        .setFooter("Choose wisely! - Made by trungisreal");
+        .setFooter({
+          text: "Choose wisely! - Made by trungisreal",
+        });
 
-      const row = new ActionRowBuilder().addComponents(
+      let row = new ActionRowBuilder<ButtonBuilder>().addComponents(
         button1,
         button2,
         button3,
@@ -98,7 +103,7 @@ export const Command: MessageCommand = {
         components: [row],
       });
 
-      const filter = (i) => !i.user.bot;
+      const filter = (i: ButtonInteraction) => !i.user.bot;
       const collector = sentMessage.createMessageComponentCollector({
         filter,
         time: 5000,
@@ -115,7 +120,7 @@ export const Command: MessageCommand = {
           }
 
           let isCorrect = false;
-          if (interaction.customId == q_ans) {
+          if (interaction.customId === String(q_ans)) {
             isCorrect = true;
           }
 
@@ -148,7 +153,8 @@ export const Command: MessageCommand = {
         button3.setDisabled(true);
         button4.setDisabled(true);
 
-        row.components = [button1, button2, button3, button4];
+        const updatedComponents = [button1, button2, button3, button4];
+        row = new ActionRowBuilder<ButtonBuilder>().addComponents(...updatedComponents);
 
         sentMessage.edit({
           content: `Time is over!`,
@@ -168,31 +174,9 @@ export const Command: MessageCommand = {
 
           const congratulationsMessage = `Congratulations ${winners}! You have the correct answer!\nYou have been added 1 win.`;
           return message.channel.send(congratulationsMessage).then( // Send the message then add the executor stats.
-            await client.database.userData.upsert({
-              where: {
-                userID: message.author.id,
-              },
-              update: {
-                stats: {
-                  update: {
-                    commands: {
-                      increment: 1
-                    }
-                  }
-                }
-              },
-              create: {
-                wins: 0,
-                userID: message.author.id,
-                stats: {
-                  create: {
-                    lost: 0,
-                    commands: 1,
-                  }
-                },
-                badges: []
-              },
-            })
+            async () => {
+              await addCommandStats(client, message);
+            }
           );
         }
       });
@@ -219,6 +203,7 @@ async function addWins(client: ExtendedClient, users: string[]) {
         userID: userId,
         stats: {
           create: {
+            id: userId,
             lost: 0,
             commands: 0
           }
@@ -239,8 +224,13 @@ async function addLost(client: ExtendedClient, users: string[]) {
       update: {
         stats: {
           update: {
-            lost: {
-              increment: 1
+            data: {
+              lost: {
+                increment: 1
+              },
+            },
+            where: {
+              id: userId
             }
           }
         }
@@ -250,6 +240,7 @@ async function addLost(client: ExtendedClient, users: string[]) {
         userID: userId,
         stats: {
           create: {
+            id: userId,
             lost: 1,
             commands: 0
           }
@@ -259,6 +250,40 @@ async function addLost(client: ExtendedClient, users: string[]) {
         stats: true
       }
     });
-    client.caches.set(`${userId}.lost`, updated_data.stats.lost)
+    client.caches.set(`${userId}.lost`, updated_data.stats[0].lost)
   }
+}
+
+async function addCommandStats(client: ExtendedClient, message: Message) {
+  await client.database.userData.upsert({
+    where: {
+      userID: message.author.id,
+    },
+    update: {
+      stats: {
+        update: {
+          data: {
+            commands: {
+              increment: 1
+            },
+          },
+          where: {
+            id: message.author.id
+          }
+        }
+      },
+    },
+    create: {
+      wins: 0,
+      userID: message.author.id,
+      stats: {
+        create: {
+          id: message.author.id,
+          lost: 0,
+          commands: 1,
+        }
+      },
+      badges: []
+    },
+  })
 }

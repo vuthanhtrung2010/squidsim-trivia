@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Stat {
-  id       Int      @id @default(autoincrement())
+  id       String   @id @unique
   lost     Int
   commands Int
   userId   String

@@ -24,8 +24,6 @@ export const Event: ClientEvent = {
       logBanner(stringLength, client);
 
       console.table({
-        "Cluster:": `#${client.cluster?.id}`,
-        "Shards:": `${client.cluster?.ids.map((d: { id: number }) => `#${d.id}`).join(", ")}`,
         "Bot User:": `${client.user?.tag}`,
         "Guild(s):": `${client.guilds.cache.size} Servers`,
         "Watching:": `${client.guilds.cache.reduce((a: number, b: { memberCount: number }) => a + b?.memberCount || 0, 0)} Members`,

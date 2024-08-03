@@ -2,7 +2,6 @@
   "name": "squidsim_trivia",
   "version": "11.0.0",
   "description": "A Discord Bot made by: trungisreal",
-  "main": "dist/index.js",
   "dependencies": {
     "@dotenvx/dotenvx": "^1.6.4",
     "@prisma/client": "^5.17.0",
@@ -14,15 +13,15 @@
     "lodash": "^4.17.21"
   },
   "scripts": {
+    "start": "npx tsx src/index.ts",
     "build:db": "prisma migrate dev --name init",
-    "build:compile": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm-run-all build:db build:compile",
-    "start": "node index.js"
+    "build": "npm-run-all build:compile"
   },
   "devDependencies": {
     "npm-run-all2": "^6.2.2",
     "prisma": "^5.17.0",
+    "tsx": "^4.16.5",
     "typescript": "^5.5.4"
   }
 }
