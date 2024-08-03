@@ -16,7 +16,7 @@
     "start": "npx tsx src/index.ts",
     "build:db": "prisma migrate dev --name init",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm-run-all build:compile"
+    "build": "npm-run-all build:db"
   },
   "devDependencies": {
     "npm-run-all2": "^6.2.2",
