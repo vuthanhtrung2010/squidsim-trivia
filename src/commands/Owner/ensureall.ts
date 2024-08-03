@@ -1,8 +1,10 @@
 import { Message, EmbedBuilder } from 'discord.js';
+import { MessageCommand } from '../../types';
 
-module.exports = {
+export const Command: MessageCommand = {
   name: `ensureall`,
   category: `Owner`,
+  cooldown: 0,
   aliases: [],
   description: `Ensure all non-bot server members are present in the database.`,
   usage: `ensureall`,
@@ -13,7 +15,7 @@ module.exports = {
         return message.channel.send({
           embeds: [
             new EmbedBuilder()
-              .setColor("RED")
+              .setColor("Red")
               .setTitle("Missing permission")
               .setDescription("You are not authorized to use this command."),
           ],
@@ -25,13 +27,13 @@ module.exports = {
 
       guild.members.cache.forEach(async (member) => {
         if (!member.user.bot) {
-          const exist_check = await client.prisma.userData.findUnique({
+          const exist_check = await client.database.userData.findUnique({
             where: {
               userID: member.id,
             },
           });
           if (!exist_check) {
-            await client.prisma.userData.create({
+            await client.database.userData.create({
               data: {
                 userID: member.id,
                 wins: 0,
@@ -45,7 +47,7 @@ module.exports = {
       message.channel.send({
         embeds: [
           new EmbedBuilder()
-            .setColor("GREEN")
+            .setColor("Green")
             .setTitle("Database Ensure Complete")
             .setDescription(
               "All non-bot server members have been ensured in the database.",
@@ -57,7 +59,7 @@ module.exports = {
       message.channel.send({
         embeds: [
           new EmbedBuilder()
-            .setColor("RED")
+            .setColor("Red")
             .setTitle("Error")
             .setDescription(
               "An error occurred while ensuring members in the database.",

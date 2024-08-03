@@ -1,7 +1,8 @@
 import { EmbedBuilder } from 'discord.js';
 import { getLbData } from '../../handlers/functions';
+import { MessageCommand } from '../../types';
 
-module.exports = {
+export const Command: MessageCommand = {
   name: "leaderboard",
   category: "Game",
   aliases: ["topw", "wlb"],

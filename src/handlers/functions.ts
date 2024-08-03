@@ -1,3 +1,5 @@
+import { ExtendedClient } from "../types";
+
 export async function delay(delayInms: number) {
   try {
     return new Promise((resolve) => {
@@ -19,8 +21,8 @@ export function escapeRegex(str: string): string {
   }
 }
 
-export async function getLbData(client) {
-  return await client.user_data.findMany({
+export async function getLbData(client: ExtendedClient) {
+  return await client.database.userData.findMany({
     orderBy: {
       wins: 'desc'
     },

@@ -105,7 +105,6 @@ export const Event: ClientEvent = {
                     name: message.member.user.tag,
                     iconURL:
                       message.member.user.displayAvatarURL({
-                        dynamic: true,
                         size: 64,
                       }) || message.member.user.defaultAvatarURL,
                     url: "https://links.trung.is-a.dev",
@@ -124,7 +123,7 @@ export const Event: ClientEvent = {
       setTimeout(() => timestamps.delete(message.author?.id), cooldownAmount);
 
       // Execute the command
-      command.run(client, message, args, message.member, args.join(" "), prefix);
+      command.run(client, message, args, prefix);
     } catch (e) {
       console.log(e.stack);
       return message

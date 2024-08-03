@@ -1,38 +1,38 @@
-import { EmbedBuilder } from "discord.js";
-import { inspect } from 'util';
+import { EmbedBuilder, AttachmentBuilder } from "discord.js";
+import { MessageCommand } from "../../types";
+import { inspect } from "util";
+import chalk from "chalk";
+import { writeFile, unlink } from "fs/promises";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 
-module.exports = {
-  name: `eval`,
-  category: `Owner`,
-  aliases: [`evaluate`],
-  description: `eval Command`,
-  usage: `eval <CODE>`,
-  type: "bot",
-  run: async (client, message, args, prefix) => {
-    if ("1139406664584409159" !== message.author?.id)
-      return message.channel.send({
-        embeds: [
-          new EmbedBuilder()
-            .setColor("RED")
-            .setTitle("Missing perm"),
-        ],
-      });
+export const Command: MessageCommand = {
+  name: "eval",
+  category: "Owner",
+  usage: "eval <Code>",
+  cooldown: 0,
+  description: "Evaluate a TypeScript code.",
+  run: async (client, message, args, prefix): Promise<any> => {
     if (!args[0])
       return message.channel.send({
         embeds: [
           new EmbedBuilder()
-            .setColor("RED")
-            .setTitle(eval("Provide code to eval")),
+            .setColor("Red")
+            .setTitle("Missing required parameters.")
+            .setDescription(
+              "Please add a <:typescript:1241728952448323585> code to eval!",
+            ),
         ],
       });
+
     let evaled;
     try {
       if (args.join(` `).includes(`token`))
         return message.channel.send({
           embeds: [
             new EmbedBuilder()
-              .setTitle(eval("Trung | Evaluation"))
-              .setColor("RED")
+              .setTitle("Trung | Evaluation")
+              .setColor("Blue")
               .addFields(
                 { name: ":inbox_tray: Input", value: args.join(` `) },
                 {
@@ -43,30 +43,64 @@ module.exports = {
           ],
         });
 
-      evaled = await eval(args.join(` `));
-      //make string out of the evaluation
-      let string = inspect(evaled);
-      let evalEmbed = new EmbedBuilder()
+      evaled = inspect(await eval(args.join(" ")), { depth: 0 });
+
+      // Make string out of the evaluation
+
+      // Use substring instead of split for output
+      const input_msg = `\`\`\`js\n${args.join(` `).substring(0, 1024 - ":inbox_tray: Input".length - 8)}\`\`\``;
+      let output_msg = `\`\`\`${evaled}\`\`\``;
+      let fileAttachment;
+      if (evaled.length > 1024 - ":outbox_tray: Output".length - 6) {
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = dirname(__filename);
+        const filePath = join(__dirname, "eval_output.txt");
+        await writeFile(filePath, evaled, "utf8");
+        fileAttachment = new AttachmentBuilder(filePath);
+        output_msg = `\`\`\`CHECK THE FILE\`\`\``;
+
+        const evalEmbed = new EmbedBuilder()
+          .setTitle("Trung | Evaluation")
+          .setColor("Blue")
+          .addFields(
+            { name: ":inbox_tray: Input", value: input_msg },
+            {
+              name: ":outbox_tray: Output",
+              value: output_msg,
+            },
+          );
+
+        await message.channel.send({
+          embeds: [evalEmbed],
+          files: [fileAttachment],
+        });
+
+        // Delete the file after sending the message
+        await unlink(filePath);
+        return;
+      }
+
+      const evalEmbed = new EmbedBuilder()
         .setTitle("Trung | Evaluation")
-        .setColor("BLUE");
+        .setColor("Blue")
+        .addFields(
+          { name: ":inbox_tray: Input", value: input_msg },
+          {
+            name: ":outbox_tray: Output",
+            value: output_msg,
+          },
+        );
 
-      let input_msg = `\`\`\`js\n${args.join(" ")}\`\`\``;
-      let output_msg = `\`\`\`${string.substring(0, 1000)}\`\`\``;
-      //(over)write embed description
-      evalEmbed.addFields(
-        { name: ":inbox_tray: Input", value: input_msg },
-        { name: ":outbox_tray: Output", value: output_msg },
-      );
-
-      message.channel.send({ embeds: [evalEmbed] });
+      return message.channel.send({ embeds: [evalEmbed] });
     } catch (e) {
-      console.log(String(e.stack));
+      client.sentry?.captureException(e);
+      console.log(chalk.dim.bgRed((e as Error).stack));
       return message.channel.send({
         embeds: [
           new EmbedBuilder()
-            .setColor("RED")
-            .setTitle("Err orrcured!")
-            .setDescription(`Error \`\`\`${e}\`\`\``),
+            .setColor("Red")
+            .setTitle("An error occurred")
+            .setDescription(`Error: ${(e as Error).stack}`),
         ],
       });
     }

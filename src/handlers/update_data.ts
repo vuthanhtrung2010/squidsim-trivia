@@ -1,6 +1,7 @@
+import { ExtendedClient } from '../types';
 import { getLbData } from './functions';
 
-module.exports = async (client) => {
+export const DataManager = async (client: ExtendedClient) => {
   // Define types:
   type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
   type user_data = ThenArg<ReturnType<typeof getLbData>>

@@ -1,14 +1,15 @@
-import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
+import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, GuildMember } from 'discord.js';
 import question from '../../../questions.json'
+import { ExtendedClient, MessageCommand } from '../../types';
 
-module.exports = {
+export const Command: MessageCommand = {
   name: `superspeedtrivia`,
   category: `Game`,
   aliases: [`trivia`, `spt`],
   description: `Do a quick quiz`,
   cooldown: 10,
   usage: `.spt`,
-  run: async (client, message, args, prefix) => {
+  run: async (client, message, args, prefix): Promise<any> => {
     try {
       let check_data = client.caches.get("isPlaying")
 
@@ -156,7 +157,7 @@ module.exports = {
         });
 
         client.caches.set("isPlaying", false);
-        
+
         await addWins(client, correct_user) // Add wins to the users
         await addLost(client, failure_user); // Add stats lost to the failure users
 
@@ -164,17 +165,19 @@ module.exports = {
           const winners = correct_user
             .map((userId) => `<@${userId}>`)
             .join(", ");
-          
+
           const congratulationsMessage = `Congratulations ${winners}! You have the correct answer!\nYou have been added 1 win.`;
           return message.channel.send(congratulationsMessage).then( // Send the message then add the executor stats.
-            await client.prisma.userData.upsert({
+            await client.database.userData.upsert({
               where: {
                 userID: message.author.id,
               },
               update: {
                 stats: {
-                  commands: {
-                    increment: 1
+                  update: {
+                    commands: {
+                      increment: 1
+                    }
                   }
                 }
               },
@@ -182,9 +185,12 @@ module.exports = {
                 wins: 0,
                 userID: message.author.id,
                 stats: {
-                  lost: 0,
-                  commands: 1
-                }
+                  create: {
+                    lost: 0,
+                    commands: 1,
+                  }
+                },
+                badges: []
               },
             })
           );
@@ -196,10 +202,10 @@ module.exports = {
   },
 };
 
-async function addWins(client, users) {
+async function addWins(client: ExtendedClient, users: string[]) {
   let updated_data
   for (const userId of users) {
-    updated_data = await client.prisma.userData.upsert({
+    updated_data = await client.database.userData.upsert({
       where: {
         userID: userId,
       },
@@ -212,8 +218,10 @@ async function addWins(client, users) {
         wins: 1,
         userID: userId,
         stats: {
-          lost: 0,
-          commands: 0
+          create: {
+            lost: 0,
+            commands: 0
+          }
         }
       },
     });
@@ -221,17 +229,19 @@ async function addWins(client, users) {
   }
 }
 
-async function addLost(client, users) {
+async function addLost(client: ExtendedClient, users: string[]) {
   let updated_data
   for (const userId of users) {
-    updated_data = await client.prisma.userData.upsert({
+    updated_data = await client.database.userData.upsert({
       where: {
         userID: userId,
       },
       update: {
         stats: {
-          lost: {
-            increment: 1
+          update: {
+            lost: {
+              increment: 1
+            }
           }
         }
       },
@@ -239,10 +249,15 @@ async function addLost(client, users) {
         wins: 0,
         userID: userId,
         stats: {
-          lost: 1,
-          commands: 0
+          create: {
+            lost: 1,
+            commands: 0
+          }
         }
       },
+      include: {
+        stats: true
+      }
     });
     client.caches.set(`${userId}.lost`, updated_data.stats.lost)
   }

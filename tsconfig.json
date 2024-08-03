@@ -1,11 +1,13 @@
 {
     "compilerOptions": {
         "target": "ESNext",
-        "module": "CommonJS",
-        "lib": ["ES6"],
+        "module": "ESNext",
+        "lib": ["ESNext"],
         "rootDir": "./",
         "outDir": "dist",
         "moduleResolution": "Node",
+        "noEmit": true,
+        "noImplicitAny": true,
         "skipLibCheck": true,
         "removeComments": true,
         "resolveJsonModule": true,

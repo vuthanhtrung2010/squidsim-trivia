@@ -5,8 +5,6 @@ import {
   Client,
   Collection,
   Message,
-  ActionRowBuilderComponent,
-  ActionRowBuilderComponentBuilder,
   MessageComponentInteraction,
   User,
 } from "discord.js";
@@ -29,12 +27,6 @@ export interface ExtendedClient extends Client {
       MapAndSet: number;
     };
   };
-  disableComponentMessage?: (
-    C: MessageComponentInteraction<CacheType>,
-  ) => boolean | void;
-  getDisabledComponents?: (
-    MessageComponents: ActionRow<ActionRowBuilderComponent>[],
-  ) => ActionRowBuilder<ActionRowBuilderComponentBuilder>[];
   getUser?: (id: string) => Promise<User>;
 }
 
@@ -51,6 +43,7 @@ export interface MessageCommand {
     client: ExtendedClient,
     message: Message,
     args: Array<string>,
+    prefix: string,
   ) => Promise<void> | void | Message | Promise<Message>;
 } // MessageCommands Interface
 

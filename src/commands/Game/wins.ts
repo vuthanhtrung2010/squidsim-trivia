@@ -1,6 +1,7 @@
 import { EmbedBuilder } from 'discord.js';
+import { MessageCommand } from '../../types';
 
-module.exports = {
+export const Command: MessageCommand = {
   name: "wins",
   category: "Game",
   description: "Displays your number of wins.",
@@ -23,7 +24,7 @@ module.exports = {
       if (client.caches.has(`${userId}.wins`)) {
         userData = client.caches.get(`${userId}.wins`);
       } else {
-        userData = await client.prisma.userData.findUnique({
+        userData = await client.database.userData.findUnique({
           where: {
             userID: userId,
           },
@@ -42,14 +43,14 @@ module.exports = {
         .setDescription(`<@${userId}> have ${wins} wins.`)
         .setAuthor({
           name: user.tag,
-          iconURL: user.displayAvatarURL({ dynamic: true, size: 64 }),
+          iconURL: user.displayAvatarURL({ size: 64 }),
         })
         .setColor("#ff0000");
 
       message.reply({ embeds: [embed] });
 
       // Make sure up-to-date
-      const data = await client.prisma.userData.findUnique({
+      const data = await client.database.userData.findUnique({
         where: {
           userID: userId,
         },
