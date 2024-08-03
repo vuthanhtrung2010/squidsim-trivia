@@ -2,6 +2,7 @@
   "name": "squidsim_trivia",
   "version": "11.0.0",
   "description": "A Discord Bot made by: trungisreal",
+  "type": "module",
   "dependencies": {
     "@dotenvx/dotenvx": "^1.6.4",
     "@prisma/client": "^5.17.0",
