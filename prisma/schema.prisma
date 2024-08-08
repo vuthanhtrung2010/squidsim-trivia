@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Stat {
-  id       String   @id @unique
+  id       String   @id
   lost     Int
   commands Int
   userId   String
@@ -16,7 +16,7 @@ model Stat {
 }
 
 model UserData {
-  userID String   @id @unique
+  userID String   @id
   stats  Stat[]
   wins   Int
   badges String[]

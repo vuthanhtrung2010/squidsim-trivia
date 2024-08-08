@@ -37,8 +37,15 @@ export const Command: MessageCommand = {
               data: {
                 userID: member.id,
                 wins: 0,
+                stats: {
+                  create: {
+                    id: member.id,
+                    lost: 0,
+                    commands: 1,
+                  }
+                },
+                badges: []
               },
-              
             });
           }
         }
