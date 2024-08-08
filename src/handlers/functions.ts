@@ -30,10 +30,6 @@ export async function getLbData(client: ExtendedClient) {
   });
 }
 
-Object.defineProperty(module.exports, "__esModule", {
-  value: true,
-});
-
 export function calcProcessDurationTime(
   beforeHRTime: [number, number],
   format: boolean,
