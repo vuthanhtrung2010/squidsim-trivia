@@ -17,11 +17,5 @@ CREATE TABLE "UserData" (
     CONSTRAINT "UserData_pkey" PRIMARY KEY ("userID")
 );
 
--- CreateIndex
-CREATE UNIQUE INDEX "Stat_id_key" ON "Stat"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "UserData_userID_key" ON "UserData"("userID");
-
 -- AddForeignKey
 ALTER TABLE "Stat" ADD CONSTRAINT "Stat_userId_fkey" FOREIGN KEY ("userId") REFERENCES "UserData"("userID") ON DELETE RESTRICT ON UPDATE CASCADE;
