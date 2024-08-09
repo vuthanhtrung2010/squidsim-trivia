@@ -1,7 +1,6 @@
 import Discord, { Message, PermissionsBitField } from 'discord.js';
 import { ClientEvent, ExtendedClient } from '../../types';
 
-// Here the event starts
 export const Event: ClientEvent = {
   name: "messageCreate",
   run: async (message: Message, client: ExtendedClient): Promise<any> => {
@@ -32,7 +31,7 @@ export const Event: ClientEvent = {
       // Extract the matched prefix from the message content
       const matchedPrefix = prefix;
 
-      // Check permissions
+      // Check bot permissions
       const requiredPermissions = [
         PermissionsBitField.Flags.SendMessages,
         PermissionsBitField.Flags.UseExternalEmojis,
@@ -76,7 +75,7 @@ export const Event: ClientEvent = {
       const timestamps = client.cooldowns.get(command.name); // Get the timestamp of the last used commands
       const cooldownAmount = (command.cooldown || 1) * 1000; // Get the cooldown amount of the command
 
-      // Check if the guild ID is not "901533988382998618" or "1220234130634178591"
+      // Check if the guild ID is not SquidSim or Test Server.
       if (
         !(
           message.guild.id === "901533988382998618" ||
