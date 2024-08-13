@@ -57,6 +57,7 @@ export const Command: MessageCommand = {
       });
       client.caches.set(`${userId}.wins`, data.wins)
     } catch (error) {
+      client.sentry?.captureException(error);
       console.error("An error occurred:", error);
     }
   },

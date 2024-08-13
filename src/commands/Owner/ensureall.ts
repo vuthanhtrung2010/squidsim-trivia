@@ -62,6 +62,7 @@ export const Command: MessageCommand = {
         ],
       });
     } catch (error) {
+      client.sentry?.captureException(error);
       console.error("An error occurred:", error);
       message.channel.send({
         embeds: [

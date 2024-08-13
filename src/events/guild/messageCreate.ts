@@ -15,8 +15,8 @@ export const Event: ClientEvent = {
         return;
 
       // If the channel is partial, fetch it
-      if (message.channel?.partial) await message.channel.fetch().catch(() => { });
-      if (message.member?.partial) await message.member.fetch().catch(() => { });
+      if (message.channel?.partial) await message.channel.fetch().catch((e) => { client.sentry?.captureException(e); });
+      if (message.member?.partial) await message.member.fetch().catch((e) => { client.sentry?.captureException(e); });
 
       const prefix = "!";
 
@@ -47,7 +47,10 @@ export const Event: ClientEvent = {
           .join(", ");
         return message
           .reply(`:x: **I am missing the following permissions: ${missing}**`)
-          .catch(console.error);
+          .catch((e) => {
+            client.sentry?.captureException(e);
+            console.error(e);
+          });
       }
 
       // Create the arguments by slicing off the prefix length
@@ -113,7 +116,10 @@ export const Event: ClientEvent = {
                   ),
               ],
             })
-            .catch(console.error);
+            .catch((e) => {
+              client.sentry?.captureException(e);
+              console.error(e);
+            });
         }
       }
 
@@ -124,6 +130,7 @@ export const Event: ClientEvent = {
       // Execute the command
       command.run(client, message, args, prefix);
     } catch (e) {
+      client.sentry?.captureException(e);
       console.log(e.stack);
       return message
         .reply({
@@ -137,11 +144,20 @@ export const Event: ClientEvent = {
         .then(async (msg) => {
           setTimeout(() => {
             try {
-              msg.delete().catch(console.error);
-            } catch { }
+              msg.delete().catch((e) => {
+                client.sentry?.captureException(e);
+                console.error(e);
+              });
+            } catch(e) {
+              client.sentry?.captureException(e);
+              console.error(e);
+            }
           }, 5000);
         })
-        .catch(console.error);
+        .catch((e) => {
+          client.sentry?.captureException(e);
+          console.error(e);
+        });
     }
   }
 }

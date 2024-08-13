@@ -6,6 +6,8 @@ import { ClientVar } from "./handlers/clientvariables";
 import { CommandManager } from "./handlers/commands";
 import { EventsManager } from "./handlers/events";
 import { DatabaseManager } from "./handlers/loaddb";
+import { init } from "@sentry/node";
+import { nodeProfilingIntegration } from "@sentry/profiling-node";
 
 config();
 
@@ -26,6 +28,24 @@ config();
     ],
     partials: [Partials.Channel],
   }) as ExtendedClient;
+
+  if (process.env.MODE && process.env.MODE === "production") {
+    try {
+      client.sentry = init({
+        dsn: process.env.SENTRY_DSN_ADDRESS,
+        integrations: [
+          // Add our Profiling integration
+          nodeProfilingIntegration(),
+        ],
+        // Performance Monitoring
+        tracesSampleRate: 1.0, // Capture 100% of the transactions
+        profilesSampleRate: 1.0,
+        environment: "production",
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
   
   await ClientVar(client);
   await CommandManager(client);

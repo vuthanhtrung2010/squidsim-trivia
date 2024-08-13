@@ -53,6 +53,7 @@ export const Command: MessageCommand = {
 
       message.reply({ content: `<@${message.author.id}>`, embeds: [embed] });
     } catch (error) {
+      client.sentry?.captureException(error);
       console.error("An error occurred:", error);
     }
   },
