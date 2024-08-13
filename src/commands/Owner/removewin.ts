@@ -1,6 +1,7 @@
 import { EmbedBuilder } from "discord.js";
 import { MessageCommand } from "../../types";
 import chalk from "chalk";
+import { updateLbData } from "../../handlers/functions";
 
 export const Command: MessageCommand = {
     name: "removewin",
@@ -29,6 +30,7 @@ export const Command: MessageCommand = {
                             .setDescription("Amount must be a number.")
                     ],
                 });
+            updateLbData(client);
 
             await client.database.userData.upsert({
                 where: {

@@ -1,6 +1,7 @@
 import { EmbedBuilder } from "discord.js";
 import { MessageCommand } from "../../types";
 import chalk from "chalk";
+import { updateLbData } from "../../handlers/functions";
 
 export const Command: MessageCommand = {
     name: "addwin",
@@ -51,6 +52,7 @@ export const Command: MessageCommand = {
                     }
                 },
             })
+            await updateLbData(client);
 
             return message.channel.send({
                 embeds: [
