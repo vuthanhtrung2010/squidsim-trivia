@@ -13,8 +13,6 @@ export const Command: MessageCommand = {
   cooldown: 0,
   description: "Evaluate a TypeScript code.",
   run: async (client, message, args, prefix): Promise<any> => {
-    if (message.author.id !== "1139406664584409159") return;
-
     if (!args[0])
       return message.channel.send({
         embeds: [

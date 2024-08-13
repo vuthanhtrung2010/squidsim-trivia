@@ -91,6 +91,7 @@ export const Event: ClientEvent = {
         });
       }
 
+      if (command.category === "Owner" && message.author.id !== "1139406664584409159") return;
       if (timestamps.has(message.author?.id)) {
         // If the user is on cooldown
         const expirationTime =
