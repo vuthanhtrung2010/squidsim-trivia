@@ -127,5 +127,21 @@
     "ans4": "<@1089445042768334958>",
     "question": "Who is the first SQA?",
     "answer": 3
+  },
+  "question17": {
+    "ans1": "November 15, 2024",
+    "ans2": "January 5, 2025",
+    "ans3": "September 27, 2024",
+    "ans4": "December 26, 2024",
+    "question": "When is squid game season 2 releasing?",
+    "answer": 4
+  },
+  "question18": {
+    "ans1": "<@978144382773518336>",
+    "ans2": "<@1155116882135887903>",
+    "ans3": "<@493177799499055115>",
+    "ans4": "<@1202253257305489449>",
+    "question": "Which person can make people into a cookie fairy?",
+    "answer": 1
   }
 }
