@@ -143,5 +143,13 @@
     "ans4": "<@1202253257305489449>",
     "question": "Which person can make people into a cookie fairy?",
     "answer": 1
+  },
+  "question19": {
+    "ans1": "ping",
+    "ans2": "99!",
+    "ans3": "!games",
+    "ans4": "!rlgl",
+    "question": "What was the first command executed on squidsim?",
+    "answer": 2
   }
 }
