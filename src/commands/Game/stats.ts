@@ -39,6 +39,12 @@ export const Command: MessageCommand = {
         return message.channel.send("User not found in database.");
       }
 
+      let WinRate = (userData.wins / (userData.wins + userData.stats[0].lost)) * 100;
+
+      if (isNaN(WinRate)) {
+        WinRate = 0;
+      }
+
       const embed = new EmbedBuilder()
         .setTitle("Game Stats")
         .addFields(
@@ -59,7 +65,7 @@ export const Command: MessageCommand = {
           },
           {
             name: "Win rate",
-            value: `> \`\`\`${((userData.wins / (userData.wins + userData.stats[0].lost)) * 100).toFixed(2)}%\`\`\``,
+            value: `> \`\`\`${WinRate.toFixed(2)}%\`\`\``,
             inline: true,
           },
         )
