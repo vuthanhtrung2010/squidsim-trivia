@@ -20,6 +20,12 @@ export const Command: MessageCommand = {
         }
       }
 
+      const user = await message.guild?.members.fetch(userId);
+
+      if (!user) {
+        return message.channel.send("User not found in the server.");
+      }
+
       const userData = await client.database.userData.findUnique({
         where: {
           userID: userId,
@@ -58,8 +64,8 @@ export const Command: MessageCommand = {
           },
         )
         .setAuthor({
-          name: message.author.tag,
-          iconURL: message.author.displayAvatarURL({ size: 64 }),
+          name: user.user.tag,
+          iconURL: user.user.displayAvatarURL(),
         })
         .setColor("#ff0000");
 
