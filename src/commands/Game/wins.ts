@@ -1,5 +1,5 @@
-import { EmbedBuilder } from 'discord.js';
-import { MessageCommand } from '../../types';
+import { EmbedBuilder } from "discord.js";
+import { MessageCommand } from "../../types";
 
 export const Command: MessageCommand = {
   name: "wins",
@@ -55,7 +55,7 @@ export const Command: MessageCommand = {
           userID: userId,
         },
       });
-      client.caches.set(`${userId}.wins`, data.wins)
+      client.caches.set(`${userId}.wins`, data.wins);
     } catch (error) {
       client.sentry?.captureException(error);
       console.error("An error occurred:", error);

@@ -24,9 +24,9 @@ export function escapeRegex(str: string): string {
 export async function getLbData(client: ExtendedClient) {
   return await client.database.userData.findMany({
     orderBy: {
-      wins: 'desc'
+      wins: "desc",
     },
-    take: 25
+    take: 25,
   });
 }
 
@@ -98,10 +98,10 @@ export function duration(duration: number, useMilli: boolean = false) {
   }
 }
 
-type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
-type user_data = ThenArg<ReturnType<typeof getLbData>>
+type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
+type user_data = ThenArg<ReturnType<typeof getLbData>>;
 
 export async function updateLbData(client: ExtendedClient) {
-  const data: user_data = await getLbData(client)
-  client.caches.set("lbData", data)
-};
+  const data: user_data = await getLbData(client);
+  client.caches.set("lbData", data);
+}

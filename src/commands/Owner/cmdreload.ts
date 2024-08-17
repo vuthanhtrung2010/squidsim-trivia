@@ -25,7 +25,9 @@ export const Command: MessageCommand = {
           embeds: [
             new EmbedBuilder()
               .setColor("#e01e01")
-              .setTitle("<:no:948483017993769041> Please provide a command to reload"),
+              .setTitle(
+                "<:no:948483017993769041> Please provide a command to reload",
+              ),
           ],
         });
 
@@ -41,7 +43,9 @@ export const Command: MessageCommand = {
           embeds: [
             new EmbedBuilder()
               .setColor("#e01e01")
-              .setTitle(`<:no:948483017993769041> Could not find: \`${args[0]}\``),
+              .setTitle(
+                `<:no:948483017993769041> Could not find: \`${args[0]}\``,
+              ),
           ],
         });
 
@@ -68,7 +72,9 @@ export const Command: MessageCommand = {
         embeds: [
           new EmbedBuilder()
             .setColor("#e01e01")
-            .setTitle(`<:no:948483017993769041> Could not reload: \`${args[0]}\``)
+            .setTitle(
+              `<:no:948483017993769041> Could not reload: \`${args[0]}\``,
+            )
             .setDescription("Cmd is now removed from the BOT COMMANDS!"),
         ],
       });

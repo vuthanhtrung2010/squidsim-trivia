@@ -1,5 +1,5 @@
-import { Message, EmbedBuilder } from 'discord.js';
-import { MessageCommand } from '../../types';
+import { Message, EmbedBuilder } from "discord.js";
+import { MessageCommand } from "../../types";
 
 export const Command: MessageCommand = {
   name: `ensureall`,
@@ -42,9 +42,9 @@ export const Command: MessageCommand = {
                     id: member.id,
                     lost: 0,
                     commands: 1,
-                  }
+                  },
                 },
-                badges: []
+                badges: [],
               },
             });
           }

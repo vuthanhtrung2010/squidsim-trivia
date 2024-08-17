@@ -29,7 +29,7 @@ const loadCommand = async (
     client.sentry?.captureException(e);
     console.log(chalk.grey.bgRed(e));
   }
-}
+};
 
 export const CommandManager = async (client: ExtendedClient): Promise<void> => {
   console.log(
@@ -69,13 +69,13 @@ export const CommandManager = async (client: ExtendedClient): Promise<void> => {
 
     console.log(
       chalk.magenta(`[x] :: `) +
-      chalk.greenBright(
-        `LOADED THE ${client.commands?.size} COMMANDS after: `,
-      ) +
-      chalk.green(`${calcProcessDurationTime(dateNow, false)}ms`),
+        chalk.greenBright(
+          `LOADED THE ${client.commands?.size} COMMANDS after: `,
+        ) +
+        chalk.green(`${calcProcessDurationTime(dateNow, false)}ms`),
     );
   } catch (e) {
     console.error(e);
     client.sentry?.captureException(e);
   }
-}
+};

@@ -1,7 +1,14 @@
-import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ButtonInteraction, Message } from 'discord.js';
-import question from '../../../questions.json';
-import { ExtendedClient, MessageCommand } from '../../types';
-import { updateLbData } from '../../handlers/functions';
+import {
+  EmbedBuilder,
+  ButtonBuilder,
+  ActionRowBuilder,
+  ButtonStyle,
+  ButtonInteraction,
+  Message,
+} from "discord.js";
+import question from "../../../questions.json";
+import { ExtendedClient, MessageCommand } from "../../types";
+import { updateLbData } from "../../handlers/functions";
 
 export const Command: MessageCommand = {
   name: `superspeedtrivia`,
@@ -12,22 +19,22 @@ export const Command: MessageCommand = {
   usage: `.spt`,
   run: async (client, message, args, prefix) => {
     try {
-      let check_data = client.caches.get("isPlaying")
+      let check_data = client.caches.get("isPlaying");
 
       if (check_data === true)
         return message.channel.send("A game is already started!");
 
-      client.caches.set("isPlaying", true)
+      client.caches.set("isPlaying", true);
 
       // Assign types to question, strict check
       interface question_data {
         [key: string]: {
-          ans1: string,
-          ans2: string,
-          ans3: string,
-          ans4: string,
-          question: string,
-          answer: 1 | 2 | 3 | 4
+          ans1: string;
+          ans2: string;
+          ans3: string;
+          ans4: string;
+          question: string;
+          answer: 1 | 2 | 3 | 4;
         };
       }
 
@@ -35,10 +42,11 @@ export const Command: MessageCommand = {
       let currentQuestion: number;
 
       do {
-        currentQuestion = Math.floor(Math.random() * Object.keys(question).length) + 1;
+        currentQuestion =
+          Math.floor(Math.random() * Object.keys(question).length) + 1;
       } while (lastQuestion && currentQuestion === lastQuestion);
 
-      client.caches.set("lastQuestion", currentQuestion)
+      client.caches.set("lastQuestion", currentQuestion);
 
       const random_q = `question${currentQuestion}`;
 
@@ -74,7 +82,7 @@ export const Command: MessageCommand = {
         .setEmoji("4️⃣");
 
       let correct_user: string[] = [];
-      let failure_user: string[] = []
+      let failure_user: string[] = [];
       let interacted: string[] = [];
       const q_embed = new EmbedBuilder()
         .setTitle("Super Speed Trivia Question")
@@ -85,7 +93,7 @@ export const Command: MessageCommand = {
       **2.** ${q_2}.
       **3.** ${q_3}.
       **4.** ${q_4}.
-      `
+      `,
         )
         .setFooter({
           text: "Choose wisely! - Made by trungisreal",
@@ -95,7 +103,7 @@ export const Command: MessageCommand = {
         button1,
         button2,
         button3,
-        button4
+        button4,
       );
 
       const sentMessage = await message.reply({
@@ -133,7 +141,7 @@ export const Command: MessageCommand = {
               ephemeral: true,
             });
           } else {
-            failure_user.push(interaction.user.id)
+            failure_user.push(interaction.user.id);
 
             await interaction.reply({
               content: "You chose the wrong answer!",
@@ -155,7 +163,9 @@ export const Command: MessageCommand = {
         button4.setDisabled(true);
 
         const updatedComponents = [button1, button2, button3, button4];
-        row = new ActionRowBuilder<ButtonBuilder>().addComponents(...updatedComponents);
+        row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+          ...updatedComponents,
+        );
 
         sentMessage.edit({
           content: `Time is over!`,
@@ -174,8 +184,8 @@ export const Command: MessageCommand = {
             .join(", ");
 
           const congratulationsMessage = `Congratulations ${winners}! You have the correct answer!\nYou have been added 1 win.`;
-          message.channel.send(congratulationsMessage)
-          await addWins(client, correct_user) // Add wins to the users
+          message.channel.send(congratulationsMessage);
+          await addWins(client, correct_user); // Add wins to the users
           await updateLbData(client); // Update the leaderboard data
         }
       });
@@ -187,7 +197,7 @@ export const Command: MessageCommand = {
 };
 
 async function addWins(client: ExtendedClient, users: string[]) {
-  let updated_data
+  let updated_data;
   for (const userId of users) {
     updated_data = await client.database.userData.upsert({
       where: {
@@ -195,8 +205,8 @@ async function addWins(client: ExtendedClient, users: string[]) {
       },
       update: {
         wins: {
-          increment: 1
-        }
+          increment: 1,
+        },
       },
       create: {
         wins: 1,
@@ -205,17 +215,17 @@ async function addWins(client: ExtendedClient, users: string[]) {
           create: {
             id: userId,
             lost: 0,
-            commands: 0
-          }
-        }
+            commands: 0,
+          },
+        },
       },
     });
-    client.caches.set(`${userId}.wins`, updated_data.wins)
+    client.caches.set(`${userId}.wins`, updated_data.wins);
   }
 }
 
 async function addLost(client: ExtendedClient, users: string[]) {
-  let updated_data
+  let updated_data;
   for (const userId of users) {
     updated_data = await client.database.userData.upsert({
       where: {
@@ -226,14 +236,14 @@ async function addLost(client: ExtendedClient, users: string[]) {
           update: {
             data: {
               lost: {
-                increment: 1
+                increment: 1,
               },
             },
             where: {
-              id: userId
-            }
-          }
-        }
+              id: userId,
+            },
+          },
+        },
       },
       create: {
         wins: 0,
@@ -242,15 +252,15 @@ async function addLost(client: ExtendedClient, users: string[]) {
           create: {
             id: userId,
             lost: 1,
-            commands: 0
-          }
-        }
+            commands: 0,
+          },
+        },
       },
       include: {
-        stats: true
-      }
+        stats: true,
+      },
     });
-    client.caches.set(`${userId}.lost`, updated_data.stats[0].lost)
+    client.caches.set(`${userId}.lost`, updated_data.stats[0].lost);
   }
 }
 
@@ -264,13 +274,13 @@ async function addCommandStats(client: ExtendedClient, message: Message) {
         update: {
           data: {
             commands: {
-              increment: 1
+              increment: 1,
             },
           },
           where: {
-            id: message.author.id
-          }
-        }
+            id: message.author.id,
+          },
+        },
       },
     },
     create: {
@@ -281,9 +291,9 @@ async function addCommandStats(client: ExtendedClient, message: Message) {
           id: message.author.id,
           lost: 0,
           commands: 1,
-        }
+        },
       },
-      badges: []
+      badges: [],
     },
-  })
+  });
 }

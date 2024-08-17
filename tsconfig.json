@@ -1,19 +1,19 @@
 {
-    "compilerOptions": {
-        "target": "ESNext",
-        "module": "ESNext",
-        "lib": ["ESNext"],
-        "rootDir": "./",
-        "outDir": "dist",
-        "moduleResolution": "Node",
-        "noEmit": true,
-        "noImplicitAny": true,
-        "skipLibCheck": true,
-        "removeComments": true,
-        "resolveJsonModule": true,
-        "allowJs": true,
-        "esModuleInterop": true,
-        "declaration": true,
-        "declarationMap": true
-    }
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext"],
+    "rootDir": "./",
+    "outDir": "dist",
+    "moduleResolution": "Node",
+    "noEmit": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "declarationMap": true
+  }
 }

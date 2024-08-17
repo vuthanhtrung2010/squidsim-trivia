@@ -1,5 +1,5 @@
-import Discord, { Message, PermissionsBitField } from 'discord.js';
-import { ClientEvent, ExtendedClient } from '../../types';
+import Discord, { Message, PermissionsBitField } from "discord.js";
+import { ClientEvent, ExtendedClient } from "../../types";
 
 export const Event: ClientEvent = {
   name: "messageCreate",
@@ -15,8 +15,14 @@ export const Event: ClientEvent = {
         return;
 
       // If the channel is partial, fetch it
-      if (message.channel?.partial) await message.channel.fetch().catch((e) => { client.sentry?.captureException(e); });
-      if (message.member?.partial) await message.member.fetch().catch((e) => { client.sentry?.captureException(e); });
+      if (message.channel?.partial)
+        await message.channel.fetch().catch((e) => {
+          client.sentry?.captureException(e);
+        });
+      if (message.member?.partial)
+        await message.member.fetch().catch((e) => {
+          client.sentry?.captureException(e);
+        });
 
       const prefix = "!";
 
@@ -54,13 +60,16 @@ export const Event: ClientEvent = {
       }
 
       // Create the arguments by slicing off the prefix length
-      const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
+      const args = message.content
+        .slice(matchedPrefix.length)
+        .trim()
+        .split(/ +/);
 
       // Creating the command argument by shifting the args by 1
       const cmd = args.shift()?.toLowerCase();
 
       // If no command is added, return an error
-      if (!cmd) return
+      if (!cmd) return;
 
       // Get the command from the collection
       let command = client.commands.get(cmd);
@@ -91,7 +100,11 @@ export const Event: ClientEvent = {
         });
       }
 
-      if (command.category === "Owner" && message.author.id !== "1139406664584409159") return;
+      if (
+        command.category === "Owner" &&
+        message.author.id !== "1139406664584409159"
+      )
+        return;
       if (timestamps.has(message.author?.id)) {
         // If the user is on cooldown
         const expirationTime =
@@ -149,7 +162,7 @@ export const Event: ClientEvent = {
                 client.sentry?.captureException(e);
                 console.error(e);
               });
-            } catch(e) {
+            } catch (e) {
               client.sentry?.captureException(e);
               console.error(e);
             }
@@ -160,5 +173,5 @@ export const Event: ClientEvent = {
           console.error(e);
         });
     }
-  }
-}
+  },
+};

@@ -1,6 +1,6 @@
-import { EmbedBuilder } from 'discord.js';
-import { getLbData } from '../../handlers/functions';
-import { MessageCommand } from '../../types';
+import { EmbedBuilder } from "discord.js";
+import { getLbData } from "../../handlers/functions";
+import { MessageCommand } from "../../types";
 
 export const Command: MessageCommand = {
   name: "leaderboard",
@@ -14,19 +14,18 @@ export const Command: MessageCommand = {
       let lbDatas: number = 25;
 
       // Define types:
-      type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
-      type user_data = ThenArg<ReturnType<typeof getLbData>>
+      type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
+      type user_data = ThenArg<ReturnType<typeof getLbData>>;
 
-      let users: user_data
+      let users: user_data;
       if (client.caches.has("lbData")) {
-        users = client.caches.get("lbData")
-      }
-      else {
-        users = await getLbData(client)
-        client.caches.set("lbData", users)
+        users = client.caches.get("lbData");
+      } else {
+        users = await getLbData(client);
+        client.caches.set("lbData", users);
       }
 
-      const leaderboard = users
+      const leaderboard = users;
 
       const embed = new EmbedBuilder()
         .setTitle("Leaderboard")

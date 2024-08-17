@@ -1,5 +1,5 @@
 import { Client, GatewayIntentBits, Partials } from "discord.js";
-import { config } from '@dotenvx/dotenvx';
+import { config } from "@dotenvx/dotenvx";
 import { ExtendedClient } from "./types";
 
 import { ClientVar } from "./handlers/clientvariables";
@@ -46,7 +46,7 @@ config();
       console.error(e);
     }
   }
-  
+
   await ClientVar(client);
   await CommandManager(client);
   await DatabaseManager(client);

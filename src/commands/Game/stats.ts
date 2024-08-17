@@ -1,5 +1,5 @@
-import { EmbedBuilder } from 'discord.js';
-import { MessageCommand } from '../../types';
+import { EmbedBuilder } from "discord.js";
+import { MessageCommand } from "../../types";
 
 export const Command: MessageCommand = {
   name: "stats",
@@ -55,14 +55,14 @@ export const Command: MessageCommand = {
             name: "Win rate",
             value: `> \`\`\`${((userData.wins / (userData.wins + userData.stats[0].lost)) * 100).toFixed(2)}%\`\`\``,
             inline: true,
-          }
+          },
         )
         .setAuthor({
           name: message.author.tag,
           iconURL: message.author.displayAvatarURL({ size: 64 }),
         })
         .setColor("#ff0000");
-      
+
       return message.reply({ embeds: [embed] });
     } catch (error) {
       client.sentry?.captureException(error);
