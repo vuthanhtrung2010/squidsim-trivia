@@ -151,5 +151,13 @@
     "ans4": "!rlgl",
     "question": "What was the first command executed on squidsim?",
     "answer": 2
+  },
+  "question20": {
+    "ans1": "RH1N0",
+    "ans2": "Golden Guy",
+    "ans3": "Conquestor",
+    "ans4": "Double",
+    "question": "Who is the first Top Guard?",
+    "answer": 2
   }
 }
