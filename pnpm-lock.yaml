@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@dotenvx/dotenvx':
         specifier: ^1.11.5
-        version: 1.11.5
+        version: 1.12.1
       '@prisma/client':
         specifier: ^5.19.0
         version: 5.19.0(prisma@5.19.0)
@@ -85,8 +85,8 @@ packages:
     resolution: {integrity: sha512-PZ+vLpxGCRtmr2RMkqh8Zp+BenUaJqlS6xhgWKEZcgC/vfHLEzpHtKkB0sl3nZWpwtcKk6YWy+pU3okL2I97FA==}
     engines: {node: '>=16.11.0'}
 
-  '@dotenvx/dotenvx@1.11.5':
-    resolution: {integrity: sha512-HIuAGkJpEJ36WhAppMxtdRYQvAnmgZKe294SSecsLlkNmRgI/5cIbNh2LnenVFJsYuPozhHL9XOnOuLXIIXurg==}
+  '@dotenvx/dotenvx@1.12.1':
+    resolution: {integrity: sha512-qdTBiLDMXUxrZf91o4MQTiLrAWIwwnSu44gQUSVSysXXVSoSckUmjyjoTb+tsn0GgqZCttZZp8XYSa09IC399w==}
     hasBin: true
 
   '@esbuild/aix-ppc64@0.23.1':
@@ -920,7 +920,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dotenvx/dotenvx@1.11.5':
+  '@dotenvx/dotenvx@1.12.1':
     dependencies:
       commander: 11.1.0
       dotenv: 16.4.5
